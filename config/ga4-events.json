@@ -1,0 +1,62 @@
+{
+  "key_event": {
+    "name": "generate_lead",
+    "mark_as_key_event": true,
+    "recommended_google_ads_role": "Secondary when direct Google Ads conversion is Primary"
+  },
+  "events": [
+    {
+      "name": "generate_lead",
+      "purpose": "lead pelo WhatsApp",
+      "conversion": true,
+      "consent": "analytics"
+    },
+    {
+      "name": "whatsapp_click",
+      "purpose": "diagnóstico de CTA",
+      "conversion": false,
+      "consent": "analytics"
+    },
+    {
+      "name": "faq_open",
+      "purpose": "engajamento",
+      "conversion": false,
+      "consent": "analytics"
+    },
+    {
+      "name": "section_view",
+      "purpose": "engajamento por seção",
+      "conversion": false,
+      "consent": "analytics"
+    },
+    {
+      "name": "scroll_depth",
+      "purpose": "25, 50, 75 e 90 por cento",
+      "conversion": false,
+      "consent": "analytics"
+    }
+  ],
+  "custom_dimensions_recommended": [
+    "cta_type",
+    "cta_position",
+    "service_variant",
+    "utm_source_platform",
+    "network",
+    "device",
+    "matchtype",
+    "adgroupid"
+  ],
+  "forbidden_parameters": [
+    "name",
+    "nome",
+    "email",
+    "phone",
+    "telefone",
+    "message",
+    "mensagem",
+    "full_url",
+    "gclid",
+    "wbraid",
+    "gbraid"
+  ]
+}

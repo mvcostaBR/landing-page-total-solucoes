@@ -1,35 +1,22 @@
 {
-  "id": "/higienizacao-split",
-  "name": "Total Soluções Prediais — Higienização de Split",
+  "name": "Total Soluções Prediais — Higienização Split",
   "short_name": "Total Soluções",
-  "description": "Higienização de ar condicionado residencial, exclusivamente para modelos Split, no Rio de Janeiro.",
-  "lang": "pt-BR",
-  "dir": "ltr",
   "start_url": "/higienizacao-split",
   "scope": "/",
-  "display": "browser",
-  "orientation": "any",
-  "background_color": "#0a1628",
-  "theme_color": "#0a1628",
-  "categories": ["business"],
+  "display": "standalone",
+  "background_color": "#f7f4ed",
+  "theme_color": "#071426",
+  "lang": "pt-BR",
   "icons": [
     {
       "src": "/assets/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
       "src": "/assets/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/assets/icons/icon-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "type": "image/png"
     }
   ]
 }

@@ -1,0 +1,22 @@
+{
+  "primary": {
+    "name": "WhatsApp — Higienização Split — Clique qualificado",
+    "source": "Website / Google Ads tag through GTM",
+    "event": "google_ads_whatsapp_conversion",
+    "category": "Contact or Lead",
+    "counting": "One per ad click is recommended for lead actions",
+    "value": "No value until a verified business rule is supplied",
+    "enhanced_conversions": false,
+    "consent": [
+      "ad_storage",
+      "ad_user_data"
+    ]
+  },
+  "secondary": {
+    "name": "GA4 — generate_lead — WhatsApp",
+    "source": "GA4 key event imported into Google Ads",
+    "event": "generate_lead",
+    "optimization": "Secondary to avoid duplicate bidding signals"
+  },
+  "quality_note": "A WhatsApp click is a lead intent signal, not a confirmed scheduled service or sale."
+}

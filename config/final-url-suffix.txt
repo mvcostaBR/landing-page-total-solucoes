@@ -1,0 +1,1 @@
+utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_id={campaignid}&utm_term={keyword}&utm_content={creative}&utm_source_platform=google_ads&network={network}&device={device}&matchtype={matchtype}&adgroupid={adgroupid}

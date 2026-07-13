@@ -1,0 +1,55 @@
+[OK] Idioma pt-BR
+[OK] Viewport responsivo
+[OK] Sem formulários
+[OK] Um H1
+[OK] IDs sem duplicidade
+[OK] Âncoras internas válidas
+[OK] CTA principal exato
+[OK] CTA secundário exato
+[OK] Mensagem principal exata
+[OK] Mensagem secundária exata
+[OK] R$350,00
+[OK] R$450,00
+[OK] R$150,00
+[OK] Barra
+[OK] Recreio
+[OK] Freguesia
+[OK] Leblon
+[OK] São Conrado
+[OK] Joá
+[OK] Jardim Botânico
+[OK] Lagoa
+[OK] Botafogo
+[OK] 08h às 18h
+[OK] Analogia obrigatória
+[OK] GTM placeholder sem ID inventado
+[OK] GA4 placeholder sem ID inventado
+[OK] Google Ads placeholders sem IDs inventados
+[OK] Ordem consentimento → analytics → app
+[OK] Consent Mode v2 completo
+[OK] Conversão Google Ads separada
+[OK] Evento GA4 generate_lead
+[OK] UTMs permitidos e click IDs protegidos
+[OK] Enhanced Conversions desativado
+[OK] Sem envio de user_data
+[OK] JSON-LD válido e sincronizado
+[OK] Arquivos JSON válidos
+[OK] Assets locais existentes
+[OK] JavaScript ES6 sintaticamente válido
+[OK] CSS com blocos equilibrados
+
+Resultado: 39/39 verificações aprovadas
+
+VERIFICAÇÃO HTTP LOCAL
+[200] /index.html
+[200] /assets/css/critical.css
+[200] /assets/css/main.css
+[200] /assets/js/app.js
+[200] /assets/js/analytics.js
+[200] /assets/js/consent.js
+[200] /assets/img/hero-higienizacao-split.svg
+[200] /assets/img/og/higienizacao-split-total-solucoes-1200x630.png
+[200] /schema.json
+[200] /robots.txt
+[200] /sitemap.xml
+[200] /site.webmanifest

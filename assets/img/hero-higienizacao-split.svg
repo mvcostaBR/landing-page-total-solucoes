@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560" role="img" aria-labelledby="title desc">
+<title id="title">Ar condicionado Split residencial com fluxo de ar limpo</title>
+<desc id="desc">Ilustração técnica em azul-marinho, dourado e branco.</desc>
+<defs><linearGradient id="panel" x1="0" x2="1"><stop stop-color="#fff"/><stop offset="1" stop-color="#ece9df"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#020814" flood-opacity=".28"/></filter></defs>
+<circle cx="590" cy="120" r="92" fill="#d0ad4d" opacity=".16"/><circle cx="160" cy="420" r="130" fill="#2a527f" opacity=".34"/>
+<g filter="url(#shadow)"><rect x="95" y="145" width="570" height="210" rx="32" fill="url(#panel)"/><rect x="125" y="185" width="510" height="18" rx="9" fill="#c8c5bd"/><rect x="145" y="237" width="470" height="64" rx="14" fill="#071426"/><path d="M185 272h390" stroke="#d0ad4d" stroke-width="4" stroke-linecap="round" opacity=".75"/><circle cx="605" cy="175" r="7" fill="#d0ad4d"/></g>
+<g fill="none" stroke="#d8ebff" stroke-width="9" stroke-linecap="round" opacity=".88"><path d="M230 350c-15 55-70 70-78 124"/><path d="M365 350c0 52-20 82-20 132"/><path d="M500 350c15 55 70 70 78 124"/></g>
+<g transform="translate(540 55)"><path d="M70 10 20 28v42c0 41 24 70 50 80 26-10 50-39 50-80V28L70 10Z" fill="#071426" stroke="#d0ad4d" stroke-width="5"/><path d="m43 76 18 18 37-44" fill="none" stroke="#d0ad4d" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></g>
+<text x="95" y="510" fill="#fff" font-family="Georgia,serif" font-size="26" font-weight="700">Engenharia, limpeza e cuidado residencial</text>
+</svg>

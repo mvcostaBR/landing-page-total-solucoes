@@ -1,7 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">Total Soluções Prediais</title>
-  <rect width="64" height="64" rx="12" fill="#0a1628"/>
-  <rect x="4" y="4" width="56" height="56" rx="9" fill="none" stroke="#c9a84c" stroke-width="3"/>
-  <text x="32" y="45" text-anchor="middle" fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700">T</text>
-  <path d="M16 51h32" stroke="#c9a84c" stroke-width="3" stroke-linecap="round"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#071426"/><path d="M13 17h38v7H36v27h-8V24H13z" fill="#d0ad4d"/></svg>

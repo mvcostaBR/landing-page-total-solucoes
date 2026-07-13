@@ -1,0 +1,20 @@
+{
+  "auto_tagging": "enable_in_google_ads",
+  "manual_click_ids": "do_not_add_manually",
+  "account_level_final_url_suffix": "utm_source=google&utm_medium=cpc&utm_campaign={campaignid}&utm_id={campaignid}&utm_term={keyword}&utm_content={creative}&utm_source_platform=google_ads&network={network}&device={device}&matchtype={matchtype}&adgroupid={adgroupid}",
+  "parameters": {
+    "utm_source": "google",
+    "utm_medium": "cpc",
+    "utm_campaign": "Google Ads campaign ID",
+    "utm_id": "Google Ads campaign ID",
+    "utm_term": "matched keyword",
+    "utm_content": "creative ID",
+    "utm_source_platform": "google_ads",
+    "network": "ValueTrack network",
+    "device": "ValueTrack device",
+    "matchtype": "ValueTrack match type",
+    "adgroupid": "ValueTrack ad group ID"
+  },
+  "landing_page_capture": "sessionStorage, whitelisted values only; raw GCLID/WBRAID/GBRAID are never sent as custom event parameters",
+  "canonical": "https://www.totalsolucoesprediais.com.br/higienizacao-split"
+}

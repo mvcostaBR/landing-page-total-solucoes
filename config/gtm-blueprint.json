@@ -1,0 +1,170 @@
+{
+  "name": "Total Soluções Prediais — Google Ads e GA4",
+  "type": "implementation_blueprint_not_directly_importable",
+  "required_real_ids": [
+    "GTM container ID",
+    "GA4 measurement ID",
+    "Google Ads conversion ID",
+    "Google Ads conversion label"
+  ],
+  "implementation_mode": {
+    "recommended": "GTM centraliza Google tag, GA4, Google Ads e remarketing",
+    "anti_duplication": "Ao preencher data-gtm-id no index.html, mantenha os IDs diretos vazios."
+  },
+  "variables": [
+    {
+      "name": "DLV - cta_type",
+      "type": "data_layer",
+      "key": "cta_type"
+    },
+    {
+      "name": "DLV - cta_position",
+      "type": "data_layer",
+      "key": "cta_position"
+    },
+    {
+      "name": "DLV - cta_label",
+      "type": "data_layer",
+      "key": "cta_label"
+    },
+    {
+      "name": "DLV - service",
+      "type": "data_layer",
+      "key": "service"
+    },
+    {
+      "name": "DLV - service_variant",
+      "type": "data_layer",
+      "key": "service_variant"
+    },
+    {
+      "name": "DLV - utm_source",
+      "type": "data_layer",
+      "key": "utm_source"
+    },
+    {
+      "name": "DLV - utm_medium",
+      "type": "data_layer",
+      "key": "utm_medium"
+    },
+    {
+      "name": "DLV - utm_campaign",
+      "type": "data_layer",
+      "key": "utm_campaign"
+    },
+    {
+      "name": "DLV - utm_id",
+      "type": "data_layer",
+      "key": "utm_id"
+    }
+  ],
+  "triggers": [
+    {
+      "name": "CE - GA4 generate_lead",
+      "type": "custom_event",
+      "event_name": "generate_lead",
+      "consent_gate": "analytics_storage=granted"
+    },
+    {
+      "name": "CE - Google Ads WhatsApp",
+      "type": "custom_event",
+      "event_name": "google_ads_whatsapp_conversion",
+      "consent_gate": "ad_storage=granted AND ad_user_data=granted"
+    },
+    {
+      "name": "CE - WhatsApp analytics",
+      "type": "custom_event",
+      "event_name": "whatsapp_click",
+      "consent_gate": "analytics_storage=granted"
+    },
+    {
+      "name": "All Pages - Marketing consent",
+      "type": "all_pages",
+      "consent_gate": "ad_storage=granted"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Google tag - GA4",
+      "type": "Google tag",
+      "id": "G-XXXXXXXXXX",
+      "trigger": "Initialization / All Pages",
+      "consent": [
+        "analytics_storage"
+      ]
+    },
+    {
+      "name": "GA4 - generate_lead",
+      "type": "GA4 event",
+      "event_name": "generate_lead",
+      "trigger": "CE - GA4 generate_lead",
+      "parameters": [
+        "method",
+        "lead_channel",
+        "cta_type",
+        "cta_position",
+        "cta_label",
+        "service",
+        "service_variant",
+        "page_path",
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_id",
+        "utm_term",
+        "utm_content",
+        "utm_source_platform",
+        "network",
+        "device",
+        "matchtype",
+        "adgroupid"
+      ]
+    },
+    {
+      "name": "GA4 - whatsapp_click",
+      "type": "GA4 event",
+      "event_name": "whatsapp_click",
+      "trigger": "CE - WhatsApp analytics",
+      "parameters": [
+        "cta_type",
+        "cta_position",
+        "service_variant"
+      ]
+    },
+    {
+      "name": "Conversion Linker",
+      "type": "Conversion Linker",
+      "trigger": "All Pages",
+      "consent": [
+        "ad_storage"
+      ]
+    },
+    {
+      "name": "Google Ads - WhatsApp Lead",
+      "type": "Google Ads Conversion Tracking",
+      "conversion_id": "AW-XXXXXXXXX",
+      "conversion_label": "XXXXXXXXXXXX",
+      "trigger": "CE - Google Ads WhatsApp",
+      "consent": [
+        "ad_storage",
+        "ad_user_data"
+      ],
+      "value": "not_set_because_click_does_not_confirm_revenue"
+    },
+    {
+      "name": "Google Ads - General remarketing",
+      "type": "Google Ads Remarketing",
+      "conversion_id": "AW-XXXXXXXXX",
+      "trigger": "All Pages - Marketing consent",
+      "consent": [
+        "ad_storage",
+        "ad_personalization"
+      ]
+    }
+  ],
+  "conversion_strategy": {
+    "primary": "Google Ads direct conversion tag on google_ads_whatsapp_conversion",
+    "secondary": "GA4 generate_lead imported to Google Ads for diagnostics",
+    "duplicate_prevention": "Do not leave both actions as Primary for bidding."
+  }
+}

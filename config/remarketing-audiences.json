@@ -1,0 +1,32 @@
+{
+  "mode": "general_remarketing_only",
+  "dynamic_remarketing": "not_applicable_single_service_no_feed",
+  "consent_required": [
+    "ad_storage",
+    "ad_personalization"
+  ],
+  "audiences_recommended": [
+    {
+      "name": "Todos os visitantes",
+      "rule": "page_view on /higienizacao-split",
+      "suggested_membership_days": 30
+    },
+    {
+      "name": "Visitantes engajados",
+      "rule": "scroll_depth >= 50 OR section_view in [precos, atendimento, duvidas]",
+      "suggested_membership_days": 30
+    },
+    {
+      "name": "Alta intenção sem conversão",
+      "rule": "section_view=precos AND exclude google_ads_whatsapp_conversion",
+      "suggested_membership_days": 14
+    },
+    {
+      "name": "Conversores WhatsApp",
+      "rule": "google_ads_whatsapp_conversion",
+      "suggested_membership_days": 90,
+      "use": "exclusion or retention campaigns only"
+    }
+  ],
+  "privacy": "Do not create segments that infer medical conditions or sensitive health status."
+}
