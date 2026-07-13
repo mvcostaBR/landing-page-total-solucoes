@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 230" role="img" aria-labelledby="title desc">
+  <title id="title">Total Soluções Prediais</title>
+  <desc id="desc">Logo tipográfica simplificada da Total Soluções Prediais.</desc>
+  <rect width="600" height="230" rx="20" fill="#0a1628"/>
+  <g fill="#ffffff" font-family="Georgia, 'Times New Roman', serif" font-size="58" font-weight="700" letter-spacing="5">
+    <text x="44" y="76">TOTAL</text>
+    <text x="44" y="142">SOLUÇÕES</text>
+    <text x="44" y="208" fill="#c9a84c">PREDIAIS</text>
+  </g>
+  <path d="M350 44h202M350 186h202" stroke="#c9a84c" stroke-width="6" stroke-linecap="round"/>
+</svg>

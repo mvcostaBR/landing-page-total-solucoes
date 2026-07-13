@@ -1,0 +1,36 @@
+RELATÓRIO DE VALIDAÇÃO — SCHEMA.ORG
+Projeto: Total Soluções Prediais — Higienização de Ar Condicionado Residencial Split
+Data: 2026-07-13
+
+RESULTADO: APROVADO
+
+VERIFICAÇÕES CONCLUÍDAS
+- OK: JSON-LD inline idêntico ao schema.json.
+- OK: 12 entidades principais com @id único.
+- OK: Todos os tipos solicitados e aplicáveis estão presentes.
+- OK: Person omitido por não haver pessoa institucional necessária e verificada.
+- OK: Organization, LocalBusiness e HVACBusiness consolidados no mesmo @id.
+- OK: Três ofertas conferidas com preços e moeda exatos.
+- OK: Relações entre empresa, serviço e ofertas conferidas.
+- OK: Áreas de atendimento exatas na entidade de empresa.
+- OK: Áreas de atendimento exatas na entidade de serviço.
+- OK: Dias e horário de atendimento conferidos.
+- OK: 6 perguntas e respostas sincronizadas com o HTML.
+- OK: Speakable #titulo-principal: 1 correspondência(s).
+- OK: Speakable .hero__content > p:nth-of-type(2): 1 correspondência(s).
+- OK: Speakable .hero__content > p:nth-of-type(3): 1 correspondência(s).
+- OK: Speakable #titulo-servico: 1 correspondência(s).
+- OK: Speakable #titulo-precos: 1 correspondência(s).
+- OK: Speakable #titulo-atendimento: 1 correspondência(s).
+- OK: Speakable #titulo-duvidas: 1 correspondência(s).
+- OK: Speakable .faq__list details summary: 6 correspondência(s).
+- OK: Speakable .faq__list details p: 6 correspondência(s).
+- OK: Canonical, og:url, WebPage.url e Service.url conferidos.
+- OK: Três ImageObject com URLs e dimensões conferidos.
+- OK: 5 links de WhatsApp verificados; mensagens oficiais presentes.
+- OK: Nenhum serviço proibido foi encontrado no schema.
+- OK: Nenhum nome de propriedade desconhecido foi detectado na implementação.
+
+OBSERVAÇÃO
+- A validação local cobre sintaxe JSON, integridade do grafo, tipos e propriedades utilizados, sincronização com o HTML, seletores Speakable, dados oficiais, escopo, CTAs e consistência interna.
+- Após a publicação, valide também a URL pública no Schema Markup Validator para conferir o documento e os recursos efetivamente servidos pelo ambiente de produção.
