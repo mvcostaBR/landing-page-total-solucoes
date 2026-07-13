@@ -50,7 +50,7 @@ check('Analogia obrigatória', 'Respirar o ar de um equipamento sujo pode ser co
 check('GTM placeholder sem ID inventado', 'data-gtm-id=""' in html)
 check('GA4 placeholder sem ID inventado', 'data-ga4-id=""' in html)
 check('Google Ads placeholders sem IDs inventados', 'data-google-ads-id=""' in html and 'data-google-ads-label=""' in html)
-check('Ordem consentimento → analytics → app', html.index('/assets/js/consent.js') < html.index('/assets/js/analytics.js') < html.index('/assets/js/app.js'))
+check('Ordem consentimento → analytics → app', html.index('assets/js/consent.js') < html.index('assets/js/analytics.js') < html.index('assets/js/app.js'))
 
 consent=(root/'assets/js/consent.js').read_text(encoding='utf-8')
 analytics=(root/'assets/js/analytics.js').read_text(encoding='utf-8')
@@ -73,10 +73,12 @@ check('Arquivos JSON válidos', True)
 # Assets locais usados no HTML.
 missing=[]
 for ref in parser.hrefs + parser.srcs:
-    if not ref.startswith('/') or ref.startswith('//'): continue
+    if ref.startswith(('http://', 'https://', '//', 'mailto:', 'tel:', 'data:', '#')):
+        continue
     clean=ref.split('?',1)[0].split('#',1)[0]
-    if clean in ['/', '/higienizacao-split', '/sitemap.xml']: continue
-    p=root/clean.lstrip('/')
+    if clean in ['', '/', '/higienizacao-split']:
+        continue
+    p=root/clean.lstrip('./').lstrip('/')
     if not p.exists(): missing.append(clean)
 check('Assets locais existentes', not missing)
 
