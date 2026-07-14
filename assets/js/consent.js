@@ -1,251 +1,196 @@
 /**
- * ==========================================================================
- * TOTAL SOLUÇÕES PREDIAIS — CONSENT.JS
- * Google Consent Mode v2, preferência local e interface acessível.
- * ==========================================================================
+ * Gerenciador de consentimento local.
+ * Implementa preferências simples e compatíveis com Consent Mode v2.
  */
 (() => {
-  "use strict";
+  'use strict';
 
-  const CONFIG = Object.freeze({
-    storageKey: "tsp_consent_preferences",
-    version: "2.0",
-    ids: Object.freeze({
-      banner: "tsp-consent-banner",
-      dialog: "tsp-consent-dialog",
-      analytics: "tsp-consent-analytics",
-      marketing: "tsp-consent-marketing"
-    })
+  if (window.__TSP_CONSENT_INITIALIZED__) return;
+  window.__TSP_CONSENT_INITIALIZED__ = true;
+
+  const STORAGE_KEY = 'tsp-consent-v2';
+  const DEFAULT_STATE = Object.freeze({ analytics: false, marketing: false });
+  const doc = document;
+
+  /** Garante que a fila do Google exista antes de qualquer tag. */
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
+
+  /** Estado padrão negado até manifestação do usuário. */
+  window.gtag('consent', 'default', {
+    ad_storage: 'denied',
+    analytics_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    functionality_storage: 'granted',
+    security_storage: 'granted',
+    wait_for_update: 500
   });
 
-  const defaultState = Object.freeze({
-    necessary: true,
-    analytics: false,
-    marketing: false,
-    hasDecision: false,
-    version: CONFIG.version,
-    source: "default"
-  });
-
-  let state = { ...defaultState };
-  let previousFocus = null;
-
-  const ensureDataLayer = () => {
-    window.dataLayer = window.dataLayer || [];
-    window.gtag = window.gtag || function gtag() { window.dataLayer.push(arguments); };
-  };
-
-  /** Consentimento opcional começa negado antes de qualquer tag externa. */
-  const setDefaultConsent = () => {
-    ensureDataLayer();
-    window.gtag("consent", "default", {
-      analytics_storage: "denied",
-      ad_storage: "denied",
-      ad_user_data: "denied",
-      ad_personalization: "denied",
-      personalization_storage: "denied",
-      functionality_storage: "granted",
-      security_storage: "granted",
-      wait_for_update: 500
-    });
-  };
-
-  const updateGoogleConsent = () => {
-    ensureDataLayer();
-    window.gtag("consent", "update", {
-      analytics_storage: state.analytics ? "granted" : "denied",
-      ad_storage: state.marketing ? "granted" : "denied",
-      ad_user_data: state.marketing ? "granted" : "denied",
-      ad_personalization: state.marketing ? "granted" : "denied",
-      personalization_storage: state.marketing ? "granted" : "denied",
-      functionality_storage: "granted",
-      security_storage: "granted"
-    });
-  };
-
-  const publicState = () => ({ ...state });
-
-  const readStored = () => {
+  const safeParse = (value) => {
     try {
-      const parsed = JSON.parse(localStorage.getItem(CONFIG.storageKey) || "null");
-      if (!parsed || parsed.version !== CONFIG.version) return null;
+      const parsed = JSON.parse(value);
       return {
-        necessary: true,
-        analytics: Boolean(parsed.analytics),
-        marketing: Boolean(parsed.marketing),
-        hasDecision: true,
-        version: CONFIG.version,
-        source: "stored"
+        analytics: Boolean(parsed?.analytics),
+        marketing: Boolean(parsed?.marketing)
       };
-    } catch { return null; }
+    } catch {
+      return null;
+    }
   };
 
-  const persist = () => {
+  const readConsent = () => {
     try {
-      localStorage.setItem(CONFIG.storageKey, JSON.stringify({
-        version: CONFIG.version,
-        analytics: state.analytics,
-        marketing: state.marketing
-      }));
-    } catch { /* A preferência continua válida na sessão atual. */ }
+      return safeParse(window.localStorage.getItem(STORAGE_KEY));
+    } catch {
+      return null;
+    }
   };
 
-  const emit = (source) => {
-    window.TSP_CONSENT = publicState();
-    window.dispatchEvent(new CustomEvent("tsp:consent-updated", { detail: { ...publicState(), source } }));
+  const dispatchConsent = (state) => {
+    window.__TSP_CONSENT__ = state;
+
+    window.gtag('consent', 'update', {
+      analytics_storage: state.analytics ? 'granted' : 'denied',
+      ad_storage: state.marketing ? 'granted' : 'denied',
+      ad_user_data: state.marketing ? 'granted' : 'denied',
+      ad_personalization: state.marketing ? 'granted' : 'denied'
+    });
+
+    window.dispatchEvent(new CustomEvent('tsp:consent', { detail: state }));
   };
 
-  const syncDocument = () => {
-    document.documentElement.dataset.consentDecision = state.hasDecision ? "decided" : "pending";
-    document.documentElement.dataset.consentAnalytics = state.analytics ? "granted" : "denied";
-    document.documentElement.dataset.consentMarketing = state.marketing ? "granted" : "denied";
+  const saveConsent = (state) => {
+    const normalized = {
+      analytics: Boolean(state.analytics),
+      marketing: Boolean(state.marketing)
+    };
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
+    } catch {
+      /* Em file:// ou navegadores restritivos, mantém a preferência apenas na sessão. */
+    }
+    dispatchConsent(normalized);
+    return normalized;
   };
 
-  const createBanner = () => {
-    let banner = document.getElementById(CONFIG.ids.banner);
-    if (banner) return banner;
-    banner = document.createElement("section");
-    banner.id = CONFIG.ids.banner;
-    banner.className = "tsp-consent";
-    banner.setAttribute("role", "region");
-    banner.setAttribute("aria-label", "Preferências de privacidade");
+  window.tspConsent = {
+    get: () => window.__TSP_CONSENT__ || readConsent() || DEFAULT_STATE,
+    set: saveConsent
+  };
+
+  const storedConsent = readConsent();
+  if (storedConsent) dispatchConsent(storedConsent);
+
+  const createInterface = () => {
+    const banner = doc.createElement('aside');
+    banner.className = 'consent-banner';
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-label', 'Preferências de privacidade');
+    banner.hidden = Boolean(storedConsent);
     banner.innerHTML = `
-      <div class="tsp-consent__content">
-        <h2 class="tsp-consent__title">Preferências de privacidade</h2>
-        <p class="tsp-consent__text">Tecnologias opcionais medem uso, conversões publicitárias e desempenho. Você pode aceitar, recusar ou personalizar. Recursos necessários permanecem ativos.</p>
+      <p>Usamos recursos essenciais para o funcionamento da página. Com sua autorização, também podemos medir acessos e campanhas para melhorar o atendimento.</p>
+      <div class="consent-banner__actions">
+        <button class="consent-button" type="button" data-consent-reject>Recusar opcionais</button>
+        <button class="consent-button" type="button" data-consent-settings>Configurar</button>
+        <button class="consent-button consent-button--primary" type="button" data-consent-accept>Aceitar todos</button>
       </div>
-      <div class="tsp-consent__actions">
-        <button type="button" class="tsp-consent__button" data-consent-action="necessary">Somente necessários</button>
-        <button type="button" class="tsp-consent__button" data-consent-action="customize">Personalizar</button>
-        <button type="button" class="tsp-consent__button tsp-consent__button--primary" data-consent-action="accept-all">Aceitar todos</button>
-      </div>`;
-    document.body.append(banner);
-    return banner;
-  };
+    `;
 
-  const createDialog = () => {
-    let dialog = document.getElementById(CONFIG.ids.dialog);
-    if (dialog) return dialog;
-    dialog = document.createElement("div");
-    dialog.id = CONFIG.ids.dialog;
-    dialog.className = "tsp-consent-dialog";
-    dialog.hidden = true;
-    dialog.setAttribute("role", "dialog");
-    dialog.setAttribute("aria-modal", "true");
-    dialog.setAttribute("aria-labelledby", "tsp-consent-dialog-title");
-    dialog.innerHTML = `
-      <div class="tsp-consent-dialog__panel" tabindex="-1">
-        <header class="tsp-consent-dialog__header">
-          <h2 id="tsp-consent-dialog-title">Personalizar preferências</h2>
-          <button type="button" class="tsp-consent-dialog__close" data-consent-action="close" aria-label="Fechar preferências">×</button>
-        </header>
-        <p class="tsp-consent-dialog__intro">Escolha quais categorias opcionais podem ser ativadas neste navegador.</p>
-        <div class="tsp-consent-option"><div><h3>Necessários</h3><p>Funcionamento básico e armazenamento da sua escolha.</p></div><button type="button" class="tsp-consent-switch" role="switch" aria-checked="true" disabled aria-label="Recursos necessários sempre ativos"></button></div>
-        <div class="tsp-consent-option"><div><h3>Analytics</h3><p>GA4 e Microsoft Clarity, quando configurados.</p></div><button type="button" id="${CONFIG.ids.analytics}" class="tsp-consent-switch" role="switch" aria-checked="false" data-consent-toggle="analytics" aria-label="Permitir analytics"></button></div>
-        <div class="tsp-consent-option"><div><h3>Marketing</h3><p>Google Ads, remarketing, Meta Pixel e dados publicitários, quando configurados.</p></div><button type="button" id="${CONFIG.ids.marketing}" class="tsp-consent-switch" role="switch" aria-checked="false" data-consent-toggle="marketing" aria-label="Permitir marketing"></button></div>
-        <div class="tsp-consent-dialog__actions"><button type="button" class="tsp-consent__button" data-consent-action="necessary">Somente necessários</button><button type="button" class="tsp-consent__button tsp-consent__button--primary" data-consent-action="save">Salvar preferências</button></div>
-      </div>`;
-    document.body.append(dialog);
-    return dialog;
-  };
+    const modal = doc.createElement('div');
+    modal.className = 'consent-modal';
+    modal.hidden = true;
+    modal.innerHTML = `
+      <div class="consent-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="consent-title">
+        <div class="consent-modal__header">
+          <div>
+            <h2 id="consent-title">Preferências de privacidade</h2>
+            <p>Escolha quais recursos opcionais podem ser utilizados neste navegador.</p>
+          </div>
+          <button class="consent-modal__close" type="button" aria-label="Fechar preferências" data-consent-close>×</button>
+        </div>
+        <div class="consent-option">
+          <div><strong>Essenciais</strong><small>Necessários para funcionamento, segurança e registro das preferências.</small></div>
+          <input type="checkbox" checked disabled aria-label="Cookies essenciais sempre ativos">
+        </div>
+        <label class="consent-option">
+          <span><strong>Análise</strong><small>Ajuda a entender o uso da página e o desempenho das campanhas.</small></span>
+          <input type="checkbox" data-consent-analytics>
+        </label>
+        <label class="consent-option">
+          <span><strong>Marketing</strong><small>Permite mensuração de anúncios e públicos, quando as tags forem configuradas.</small></span>
+          <input type="checkbox" data-consent-marketing>
+        </label>
+        <div class="consent-modal__actions">
+          <button class="consent-button" type="button" data-consent-reject>Recusar opcionais</button>
+          <button class="consent-button consent-button--primary" type="button" data-consent-save>Salvar preferências</button>
+        </div>
+      </div>
+    `;
 
-  const focusable = (container) => [...container.querySelectorAll('button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])')].filter((el) => !el.hidden);
+    doc.body.append(banner, modal);
 
-  const openDialog = () => {
-    const dialog = createDialog();
-    previousFocus = document.activeElement;
-    document.getElementById(CONFIG.ids.analytics).setAttribute("aria-checked", String(state.analytics));
-    document.getElementById(CONFIG.ids.marketing).setAttribute("aria-checked", String(state.marketing));
-    dialog.hidden = false;
-    document.body.style.overflow = "hidden";
-    dialog.querySelector(".tsp-consent-dialog__panel")?.focus();
-  };
+    const analyticsInput = modal.querySelector('[data-consent-analytics]');
+    const marketingInput = modal.querySelector('[data-consent-marketing]');
+    let lastFocusedElement = null;
 
-  const closeDialog = () => {
-    const dialog = document.getElementById(CONFIG.ids.dialog);
-    if (!dialog || dialog.hidden) return;
-    dialog.hidden = true;
-    document.body.style.overflow = "";
-    if (previousFocus instanceof HTMLElement) previousFocus.focus();
-  };
+    const hideBanner = () => { banner.hidden = true; };
 
-  const apply = (analytics, marketing, source) => {
-    state = { necessary: true, analytics: Boolean(analytics), marketing: Boolean(marketing), hasDecision: true, version: CONFIG.version, source };
-    persist();
-    updateGoogleConsent();
-    syncDocument();
-    createBanner().hidden = true;
-    closeDialog();
-    emit(source);
-  };
+    const openModal = () => {
+      const current = window.tspConsent.get();
+      analyticsInput.checked = current.analytics;
+      marketingInput.checked = current.marketing;
+      lastFocusedElement = doc.activeElement;
+      modal.hidden = false;
+      modal.querySelector('[data-consent-close]')?.focus();
+    };
 
-  const handleAction = (action) => {
-    if (action === "accept-all") apply(true, true, "accept_all");
-    if (action === "necessary") apply(false, false, "necessary_only");
-    if (action === "customize") openDialog();
-    if (action === "close") closeDialog();
-    if (action === "save") apply(
-      document.getElementById(CONFIG.ids.analytics)?.getAttribute("aria-checked") === "true",
-      document.getElementById(CONFIG.ids.marketing)?.getAttribute("aria-checked") === "true",
-      "custom"
-    );
-  };
+    const closeModal = () => {
+      modal.hidden = true;
+      lastFocusedElement?.focus?.();
+    };
 
-  const bind = () => {
-    document.addEventListener("click", (event) => {
-      const open = event.target.closest("[data-consent-open]");
-      if (open) { openDialog(); return; }
-      const toggle = event.target.closest("[data-consent-toggle]");
-      if (toggle && !toggle.disabled) {
-        toggle.setAttribute("aria-checked", String(toggle.getAttribute("aria-checked") !== "true"));
-        return;
-      }
-      const action = event.target.closest("[data-consent-action]");
-      if (action) handleAction(action.dataset.consentAction);
-      const dialog = document.getElementById(CONFIG.ids.dialog);
-      if (dialog && event.target === dialog) closeDialog();
+    const acceptAll = () => {
+      saveConsent({ analytics: true, marketing: true });
+      hideBanner();
+      closeModal();
+    };
+
+    const rejectOptional = () => {
+      saveConsent(DEFAULT_STATE);
+      hideBanner();
+      closeModal();
+    };
+
+    banner.querySelector('[data-consent-accept]')?.addEventListener('click', acceptAll);
+    banner.querySelector('[data-consent-reject]')?.addEventListener('click', rejectOptional);
+    banner.querySelector('[data-consent-settings]')?.addEventListener('click', openModal);
+
+    modal.querySelector('[data-consent-close]')?.addEventListener('click', closeModal);
+    modal.querySelector('[data-consent-reject]')?.addEventListener('click', rejectOptional);
+    modal.querySelector('[data-consent-save]')?.addEventListener('click', () => {
+      saveConsent({
+        analytics: analyticsInput.checked,
+        marketing: marketingInput.checked
+      });
+      hideBanner();
+      closeModal();
     });
 
-    document.addEventListener("keydown", (event) => {
-      const dialog = document.getElementById(CONFIG.ids.dialog);
-      if (event.key === "Escape") { closeDialog(); return; }
-      if (!dialog || dialog.hidden || event.key !== "Tab") return;
-      const items = focusable(dialog);
-      if (!items.length) return;
-      if (event.shiftKey && document.activeElement === items[0]) { event.preventDefault(); items.at(-1).focus(); }
-      else if (!event.shiftKey && document.activeElement === items.at(-1)) { event.preventDefault(); items[0].focus(); }
+    doc.querySelectorAll('[data-privacy-open]').forEach((button) => button.addEventListener('click', openModal));
+
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
+    });
+
+    doc.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !modal.hidden) closeModal();
     });
   };
 
-  const expose = () => {
-    window.TSPConsent = Object.freeze({
-      getState: publicState,
-      open: openDialog,
-      reset: () => {
-        try { localStorage.removeItem(CONFIG.storageKey); } catch { /* sem ação adicional */ }
-        state = { ...defaultState };
-        setDefaultConsent();
-        syncDocument();
-        createBanner().hidden = false;
-        emit("reset");
-      }
-    });
-  };
-
-  const init = () => {
-    setDefaultConsent();
-    const stored = readStored();
-    if (stored) { state = stored; updateGoogleConsent(); }
-    window.TSP_CONSENT = publicState();
-    syncDocument();
-    createDialog();
-    const banner = createBanner();
-    banner.hidden = state.hasDecision;
-    bind();
-    expose();
-    emit(state.source);
-  };
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
-  else init();
+  if (doc.readyState === 'loading') {
+    doc.addEventListener('DOMContentLoaded', createInterface, { once: true });
+  } else {
+    createInterface();
+  }
 })();

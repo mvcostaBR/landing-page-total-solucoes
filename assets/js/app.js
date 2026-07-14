@@ -1,227 +1,137 @@
 /**
- * ==========================================================================
- * TOTAL SOLUÇÕES PREDIAIS — APP.JS
- * Interface, acessibilidade e emissão de eventos técnicos sem dados pessoais.
- * ==========================================================================
+ * Aplicação principal da landing page.
+ * - Sem bibliotecas externas.
+ * - Sem animações contínuas ou manipulação automática de rolagem.
+ * - Todos os listeners são registrados uma única vez.
  */
 (() => {
-  "use strict";
+  'use strict';
 
-  const CONFIG = Object.freeze({
-    version: "2.0.0-google-ads",
-    selectors: Object.freeze({
-      header: ".site-header",
-      hero: ".hero",
-      finalCta: ".final-cta",
-      faqItem: ".faq__list details",
-      whatsappCta: '[data-cta="whatsapp"]',
-      primaryWhatsappCta: '[data-cta="whatsapp"][data-cta-position="hero"]'
-    }),
-    scroll: Object.freeze({ backToTopThreshold: 720, depthMarks: [25, 50, 75, 90] })
+  /** Evita inicialização duplicada caso o script seja carregado novamente. */
+  if (window.__TSP_APP_INITIALIZED__) return;
+  window.__TSP_APP_INITIALIZED__ = true;
+
+  const doc = document;
+  const body = doc.body;
+  const header = doc.querySelector('[data-header]');
+  const menuToggle = doc.querySelector('[data-menu-toggle]');
+  const menu = doc.querySelector('[data-menu]');
+  const backToTop = doc.querySelector('[data-back-to-top]');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /** Atualiza o ano do copyright sem depender do servidor. */
+  doc.querySelectorAll('[data-current-year]').forEach((element) => {
+    element.textContent = String(new Date().getFullYear());
   });
 
-  const $ = (selector, scope = document) => scope.querySelector(selector);
-  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-  /** Emite eventos desacoplados. O detail contém somente metadados técnicos. */
-  const emit = (name, detail = {}) => {
-    document.dispatchEvent(new CustomEvent(name, { detail }));
+  /** Controla o menu mobile e mantém os atributos de acessibilidade sincronizados. */
+  const closeMenu = () => {
+    if (!menu || !menuToggle) return;
+    menu.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    body.classList.remove('menu-open');
   };
 
-  /** Limita atualizações de scroll a um callback por frame. */
-  const rafSchedule = (callback) => {
-    let frame = 0;
-    return (...args) => {
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        frame = 0;
-        callback(...args);
-      });
-    };
-  };
-
-  /** Compensa o header sticky e preserva foco para navegação por teclado. */
-  const initAnchorNavigation = () => {
-    const header = $(CONFIG.selectors.header);
-    if (!header) return;
-
-    const syncOffset = () => {
-      const height = Math.ceil(header.getBoundingClientRect().height);
-      document.documentElement.style.setProperty("--header-offset", `${height + 12}px`);
-    };
-
-    syncOffset();
-    if ("ResizeObserver" in window) new ResizeObserver(syncOffset).observe(header);
-
-    document.addEventListener("click", (event) => {
-      const anchor = event.target.closest('a[href^="#"]');
-      if (!anchor) return;
-      const hash = anchor.getAttribute("href");
-      if (!hash || hash === "#") return;
-      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
-      if (!target) return;
-
-      event.preventDefault();
-      const top = target.getBoundingClientRect().top + scrollY - header.offsetHeight - 12;
-      scrollTo({ top: Math.max(0, top), behavior: reducedMotion.matches ? "auto" : "smooth" });
-      setTimeout(() => target.focus({ preventScroll: true }), reducedMotion.matches ? 0 : 420);
+  if (menu && menuToggle) {
+    menuToggle.addEventListener('click', () => {
+      const willOpen = menuToggle.getAttribute('aria-expanded') !== 'true';
+      menu.classList.toggle('is-open', willOpen);
+      menuToggle.setAttribute('aria-expanded', String(willOpen));
+      body.classList.toggle('menu-open', willOpen);
     });
-  };
 
-  /** Mantém somente uma resposta da FAQ aberta por vez e registra abertura. */
-  const initFaq = () => {
-    const items = $$(CONFIG.selectors.faqItem);
-    items.forEach((details, index) => {
-      const summary = $("summary", details);
-      if (!summary) return;
-      summary.setAttribute("aria-expanded", String(details.open));
-      details.addEventListener("toggle", () => {
-        summary.setAttribute("aria-expanded", String(details.open));
-        if (details.open) {
-          items.forEach((other) => { if (other !== details) other.open = false; });
-          emit("tsp:faq-open", { faq_position: index + 1, faq_question: summary.textContent.trim() });
-        }
-      });
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+    doc.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
     });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 840) closeMenu();
+    }, { passive: true });
+  }
+
+  /**
+   * Cabeçalho e botão de retorno ao topo.
+   * requestAnimationFrame é usado apenas para limitar a frequência do evento,
+   * sem alterar a posição da página ou criar movimento repetitivo.
+   */
+  let scrollTicking = false;
+  const updateScrollState = () => {
+    const scrollY = window.scrollY || doc.documentElement.scrollTop;
+    header?.classList.toggle('is-scrolled', scrollY > 12);
+    backToTop?.classList.toggle('is-visible', scrollY > 620);
+    scrollTicking = false;
   };
 
-  /** Emite a conversão de clique antes da abertura da nova aba do WhatsApp. */
-  const initCtaTracking = () => {
-    document.addEventListener("click", (event) => {
-      const cta = event.target.closest(CONFIG.selectors.whatsappCta);
-      if (!cta) return;
-      emit("tsp:cta-click", {
-        cta_type: cta.dataset.ctaType || "unknown",
-        cta_position: cta.dataset.ctaPosition || "unknown",
-        cta_label: cta.textContent.replace(/\s+/g, " ").trim(),
-        service_variant: cta.dataset.serviceVariant || "split_residencial"
-      });
-    }, { capture: true });
-  };
+  window.addEventListener('scroll', () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    window.requestAnimationFrame(updateScrollState);
+  }, { passive: true });
 
-  /** Cria CTA flutuante reutilizando exatamente o link principal existente. */
-  const initFloatingWhatsapp = () => {
-    const source = $(CONFIG.selectors.primaryWhatsappCta) || $(CONFIG.selectors.whatsappCta);
-    if (!source) return;
+  updateScrollState();
 
-    const link = document.createElement("a");
-    link.className = "floating-whatsapp";
-    link.href = source.href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer external";
-    link.dataset.cta = "whatsapp";
-    link.dataset.ctaType = "primary";
-    link.dataset.ctaPosition = "floating";
-    link.dataset.serviceVariant = "split_residencial";
-    link.setAttribute("aria-label", "Garantir Meu Ar Puro Agora pelo WhatsApp, abre em nova aba");
-    link.innerHTML = '<svg class="icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg><span class="floating-whatsapp__label">Garantir Meu Ar Puro Agora</span>';
-    document.body.append(link);
+  backToTop?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
 
-    const hero = $(CONFIG.selectors.hero);
-    const finalCta = $(CONFIG.selectors.finalCta);
-    const visibility = { hero: Boolean(hero), final: false };
-    const update = () => {
-      const visible = !visibility.hero && !visibility.final && !document.hidden;
-      link.classList.toggle("is-visible", visible);
-      link.tabIndex = visible ? 0 : -1;
-      link.setAttribute("aria-hidden", String(!visible));
-    };
+  /** Accordion acessível. Apenas um item permanece aberto por vez. */
+  doc.querySelectorAll('[data-accordion]').forEach((accordion) => {
+    const buttons = [...accordion.querySelectorAll('.faq__question')];
 
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === hero) visibility.hero = entry.isIntersecting;
-          if (entry.target === finalCta) visibility.final = entry.isIntersecting;
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const answerId = button.getAttribute('aria-controls');
+        const answer = answerId ? doc.getElementById(answerId) : null;
+        const willOpen = button.getAttribute('aria-expanded') !== 'true';
+
+        buttons.forEach((otherButton) => {
+          const otherAnswerId = otherButton.getAttribute('aria-controls');
+          const otherAnswer = otherAnswerId ? doc.getElementById(otherAnswerId) : null;
+          otherButton.setAttribute('aria-expanded', 'false');
+          if (otherAnswer) otherAnswer.hidden = true;
         });
-        update();
-      }, { threshold: .08 });
-      if (hero) observer.observe(hero);
-      if (finalCta) observer.observe(finalCta);
-    }
-    document.addEventListener("visibilitychange", update);
-    update();
-  };
 
-  /** Cria controle acessível de retorno ao topo. */
-  const initBackToTop = () => {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "back-to-top";
-    button.setAttribute("aria-label", "Voltar ao topo");
-    button.innerHTML = '<span aria-hidden="true">↑</span>';
-    document.body.append(button);
-
-    const update = rafSchedule(() => {
-      const visible = scrollY > CONFIG.scroll.backToTopThreshold && !document.hidden;
-      button.classList.toggle("is-visible", visible);
-      button.tabIndex = visible ? 0 : -1;
-      button.setAttribute("aria-hidden", String(!visible));
+        button.setAttribute('aria-expanded', String(willOpen));
+        if (answer) answer.hidden = !willOpen;
+      });
     });
-    addEventListener("scroll", update, { passive: true });
-    button.addEventListener("click", () => {
-      scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" });
-      emit("tsp:back-to-top", { source: "floating_button" });
-    });
-    update();
-  };
+  });
 
-  /** Registra visualização de seções uma única vez, sem conteúdo pessoal. */
-  const initSectionViews = () => {
-    if (!("IntersectionObserver" in window)) return;
-    const viewed = new Set();
-    const observer = new IntersectionObserver((entries) => {
+  /**
+   * Animações de entrada executadas uma única vez.
+   * O elemento é removido do observer após aparecer, evitando loops visuais.
+   */
+  const revealElements = doc.querySelectorAll('.reveal');
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealElements.forEach((element) => element.classList.add('is-visible'));
+  } else {
+    document.documentElement.classList.add('reveal-ready');
+    const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting || viewed.has(entry.target.id)) return;
-        viewed.add(entry.target.id);
-        emit("tsp:section-view", {
-          section_id: entry.target.id,
-          section_name: entry.target.querySelector("h1, h2")?.textContent.trim() || entry.target.id
-        });
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
-    }, { rootMargin: "-20% 0px -45% 0px", threshold: 0 });
-    $$("main > section[id]").forEach((section) => observer.observe(section));
-  };
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
 
-  /** Registra marcos de profundidade, não o histórico completo de rolagem. */
-  const initScrollDepth = () => {
-    const sent = new Set();
-    const calculate = rafSchedule(() => {
-      const available = Math.max(1, document.documentElement.scrollHeight - innerHeight);
-      const percent = Math.round((scrollY / available) * 100);
-      CONFIG.scroll.depthMarks.forEach((mark) => {
-        if (percent >= mark && !sent.has(mark)) {
-          sent.add(mark);
-          emit("tsp:scroll-depth", { percent_scrolled: mark });
-        }
-      });
-    });
-    addEventListener("scroll", calculate, { passive: true });
-  };
+    revealElements.forEach((element) => revealObserver.observe(element));
+  }
 
-  /** Imagens não críticas recebem carregamento e decodificação diferidos. */
-  const initLazyImages = () => {
-    $$("img").forEach((image) => {
-      if (!image.closest(".hero") && image.getAttribute("fetchpriority") !== "high") {
-        image.loading = "lazy";
-        image.decoding = "async";
+  /** Rastreia cliques de WhatsApp sem impedir a navegação do usuário. */
+  doc.querySelectorAll('[data-whatsapp]').forEach((link) => {
+    link.addEventListener('click', () => {
+      const location = link.dataset.ctaLocation || 'indefinido';
+
+      if (typeof window.tspTrack === 'function') {
+        window.tspTrack('whatsapp_click', {
+          cta_location: location,
+          link_url: link.href,
+          page_path: window.location.pathname
+        });
       }
     });
-  };
-
-  const init = () => {
-    initAnchorNavigation();
-    initFaq();
-    initCtaTracking();
-    initLazyImages();
-    initFloatingWhatsapp();
-    initBackToTop();
-    initSectionViews();
-    initScrollDepth();
-    emit("tsp:app-ready", { app_version: CONFIG.version });
-  };
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
-  else init();
+  });
 })();

@@ -2,307 +2,77 @@
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "ImageObject",
-      "@id": "https://www.totalsolucoesprediais.com.br/#logo",
-      "name": "Logo da Total Soluções Prediais",
-      "url": "https://www.totalsolucoesprediais.com.br/assets/icons/icon-512.png",
-      "contentUrl": "https://www.totalsolucoesprediais.com.br/assets/icons/icon-512.png",
-      "width": 512,
-      "height": 512,
-      "caption": "Total Soluções Prediais",
-      "inLanguage": "pt-BR"
-    },
-    {
-      "@type": "ImageObject",
-      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#primaryimage",
-      "name": "Ilustração de higienização de ar condicionado residencial Split",
-      "url": "https://www.totalsolucoesprediais.com.br/assets/img/hero-higienizacao-split.svg",
-      "contentUrl": "https://www.totalsolucoesprediais.com.br/assets/img/hero-higienizacao-split.svg",
-      "width": 760,
-      "height": 560,
-      "caption": "Higienização técnica de ar condicionado residencial Split",
-      "representativeOfPage": true,
-      "inLanguage": "pt-BR"
-    },
-    {
-      "@type": [
-        "Organization",
-        "LocalBusiness",
-        "HVACBusiness"
-      ],
+      "@type": ["Organization", "LocalBusiness", "HVACBusiness"],
       "@id": "https://www.totalsolucoesprediais.com.br/#business",
       "name": "Total Soluções Prediais",
       "url": "https://www.totalsolucoesprediais.com.br/",
-      "description": "Empresa especializada em Engenharia, com excelência desde 2014 e base operacional na Barra da Tijuca, Rio de Janeiro.",
-      "slogan": "Excelência em Engenharia desde 2014",
+      "logo": "https://www.totalsolucoesprediais.com.br/assets/icons/icon-512.png",
       "foundingDate": "2014",
-      "telephone": "+5521964051050",
-      "logo": {
-        "@id": "https://www.totalsolucoesprediais.com.br/#logo"
-      },
-      "image": {
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#primaryimage"
-      },
+      "description": "Empresa especializada em higienização de ar condicionado Split residencial no Rio de Janeiro.",
+      "telephone": "+55-21-3337-0084",
+      "email": "michel@totalsolucoesprediais.com.br",
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Av. Embaixador Abelardo Bueno, 1111 – Sala 126 Office",
+        "streetAddress": "Av. Embaixador Abelardo Bueno, 1111 - Sala 126 Office",
         "addressLocality": "Rio de Janeiro",
         "addressRegion": "RJ",
         "addressCountry": "BR"
       },
-      "areaServed": [
-        {
-          "@type": "Place",
-          "name": "Barra, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "Recreio, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "Freguesia, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "Leblon, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "São Conrado, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "Joá, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "Jardim Botânico, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "Lagoa, Rio de Janeiro"
-        },
-        {
-          "@type": "Place",
-          "name": "Botafogo, Rio de Janeiro"
-        }
-      ],
+      "areaServed": ["Barra da Tijuca", "Recreio dos Bandeirantes", "Freguesia", "Leblon", "São Conrado", "Joá", "Jardim Botânico", "Lagoa", "Botafogo"],
       "openingHoursSpecification": {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": [
-          "https://schema.org/Monday",
-          "https://schema.org/Tuesday",
-          "https://schema.org/Wednesday",
-          "https://schema.org/Thursday",
-          "https://schema.org/Friday"
-        ],
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
         "opens": "08:00",
         "closes": "18:00"
       },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "atendimento pelo WhatsApp",
-        "telephone": "+5521964051050",
-        "url": "https://wa.me/5521964051050",
-        "availableLanguage": "pt-BR",
-        "areaServed": "Rio de Janeiro"
-      }
-    },
-    {
-      "@type": "WebSite",
-      "@id": "https://www.totalsolucoesprediais.com.br/#website",
-      "url": "https://www.totalsolucoesprediais.com.br/",
-      "name": "Total Soluções Prediais",
-      "inLanguage": "pt-BR",
-      "publisher": {
-        "@id": "https://www.totalsolucoesprediais.com.br/#business"
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Grupo Total Soluções",
+        "logo": "https://www.totalsolucoesprediais.com.br/assets/img/logo-grupo-total-solucoes.jpg"
       }
     },
     {
       "@type": "Service",
       "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service",
-      "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split",
       "name": "Higienização de Ar Condicionado Residencial Split",
-      "serviceType": "Higienização de ar condicionado residencial exclusivamente para modelos Split",
-      "description": "Higienização de ar condicionado residencial Split para famílias, apartamentos e casas nas zonas Oeste e Sul do Rio de Janeiro.",
-      "provider": {
-        "@id": "https://www.totalsolucoesprediais.com.br/#business"
-      },
-      "areaServed": [
-        "Barra",
-        "Recreio",
-        "Freguesia",
-        "Leblon",
-        "São Conrado",
-        "Joá",
-        "Jardim Botânico",
-        "Lagoa",
-        "Botafogo"
-      ],
-      "audience": {
-        "@type": "Audience",
-        "audienceType": "Famílias e moradores de apartamentos e casas preocupados com saúde, qualidade do ar, conforto e bem-estar"
-      },
-      "availableChannel": {
-        "@type": "ServiceChannel",
-        "serviceUrl": "https://wa.me/5521964051050?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20da%20Total%20Solu%C3%A7%C3%B5es%20Prediais%20e%20quero%20agendar%20a%20higieniza%C3%A7%C3%A3o%20do%20meu%20ar%20condicionado%20Split%20para%20proteger%20a%20sa%C3%BAde%20da%20minha%20fam%C3%ADlia.%20Podem%20me%20passar%20as%20orienta%C3%A7%C3%B5es%3F",
-        "availableLanguage": "pt-BR"
-      },
+      "serviceType": "Higienização de ar condicionado Split residencial",
+      "provider": {"@id": "https://www.totalsolucoesprediais.com.br/#business"},
+      "areaServed": ["Barra da Tijuca", "Recreio dos Bandeirantes", "Freguesia", "Leblon", "São Conrado", "Joá", "Jardim Botânico", "Lagoa", "Botafogo"],
       "offers": [
-        {
-          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#offer-9000-18000"
-        },
-        {
-          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#offer-22000-30000"
-        },
-        {
-          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#offer-condensadora"
-        }
-      ]
-    },
-    {
-      "@type": "Offer",
-      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#offer-9000-18000",
-      "name": "Higienização de Split de 9.000 até 18.000 BTUs",
-      "price": "350.00",
-      "priceCurrency": "BRL",
-      "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos",
-      "itemOffered": {
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
-      }
-    },
-    {
-      "@type": "Offer",
-      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#offer-22000-30000",
-      "name": "Higienização de Split de 22.000 até 30.000 BTUs",
-      "price": "450.00",
-      "priceCurrency": "BRL",
-      "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos",
-      "itemOffered": {
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
-      }
-    },
-    {
-      "@type": "Offer",
-      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#offer-condensadora",
-      "name": "Higienização da condensadora avaliada no local",
-      "price": "150.00",
-      "priceCurrency": "BRL",
-      "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos",
-      "itemOffered": {
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
-      }
-    },
-    {
-      "@type": "BreadcrumbList",
-      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#breadcrumb",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Início",
-          "item": "https://www.totalsolucoesprediais.com.br/"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Higienização de Ar Condicionado Split",
-          "item": "https://www.totalsolucoesprediais.com.br/higienizacao-split"
-        }
+        {"@type": "Offer", "name": "Higienização da evaporadora Split de 9.000 a 18.000 BTUs", "price": "350.00", "priceCurrency": "BRL"},
+        {"@type": "Offer", "name": "Higienização da evaporadora Split de 22.000 a 30.000 BTUs", "price": "450.00", "priceCurrency": "BRL"},
+        {"@type": "Offer", "name": "Higienização adicional da condensadora, quando necessária após avaliação no local", "price": "150.00", "priceCurrency": "BRL"}
       ]
     },
     {
       "@type": "FAQPage",
-      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#faq",
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Quais aparelhos são atendidos nesta landing page?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "O serviço oferecido nesta página é exclusivamente a higienização de ar condicionado residencial modelo Split."
-          }
+          "name": "Quais aparelhos a Total Soluções Prediais atende?",
+          "acceptedAnswer": {"@type": "Answer", "text": "A empresa realiza, nesta oferta, a higienização de ar condicionado residencial exclusivamente para modelos Split de 9.000 a 30.000 BTUs. Aparelhos de janela não são atendidos."}
         },
         {
           "@type": "Question",
           "name": "Quanto custa a higienização do ar condicionado Split?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Split de 9.000 até 18.000 BTUs: R$350,00. Split de 22.000 até 30.000 BTUs: R$450,00. Condensadora, avaliada no local: R$150,00."
-          }
+          "acceptedAnswer": {"@type": "Answer", "text": "Os valores da unidade evaporadora são R$350,00 para Split de 9.000 a 18.000 BTUs e R$450,00 para Split de 22.000 a 30.000 BTUs. Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados R$150,00 por unidade."}
         },
         {
           "@type": "Question",
           "name": "Em quais bairros a Total Soluções Prediais atende?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Zona Oeste: Barra, Recreio e Freguesia. Zona Sul: Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo."
-          }
+          "acceptedAnswer": {"@type": "Answer", "text": "Atendimento na Barra, Recreio, Freguesia, Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo, no Rio de Janeiro."}
         },
         {
           "@type": "Question",
           "name": "Qual é o horário de atendimento?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "O atendimento é de segunda a sexta, das 08h às 18h."
-          }
+          "acceptedAnswer": {"@type": "Answer", "text": "O atendimento ocorre de segunda a sexta-feira, das 8h às 18h, com contato e agendamento exclusivamente pelo WhatsApp."}
         },
         {
           "@type": "Question",
-          "name": "Como solicitar o atendimento?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Toda solicitação é feita exclusivamente pelo WhatsApp, por meio dos botões desta página."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "A página oferece manutenção corretiva ou instalação?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Não. Esta página oferece somente higienização de ar condicionado residencial Split. Não inclui manutenção corretiva, instalação, troca de peças, PMOC, projetos ou equipamentos comerciais e industriais."
-          }
+          "name": "Quais serviços não estão incluídos?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Esta oferta não inclui manutenção corretiva, instalação, troca de peças, PMOC, projetos ou atendimento a equipamentos comerciais, industriais e aparelhos de janela."}
         }
       ]
-    },
-    {
-      "@type": "WebPage",
-      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#webpage",
-      "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split",
-      "name": "Higienização de Ar Condicionado Split no Rio de Janeiro | Total Soluções Prediais",
-      "description": "Higienização de ar condicionado residencial Split na Barra, Recreio, Freguesia, Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo.",
-      "inLanguage": "pt-BR",
-      "isPartOf": {
-        "@id": "https://www.totalsolucoesprediais.com.br/#website"
-      },
-      "about": {
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
-      },
-      "primaryImageOfPage": {
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#primaryimage"
-      },
-      "breadcrumb": {
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#breadcrumb"
-      },
-      "mainEntity": [
-        {
-          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
-        },
-        {
-          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#faq"
-        }
-      ],
-      "speakable": {
-        "@type": "SpeakableSpecification",
-        "cssSelector": [
-          "#titulo-principal",
-          "#resumo-direto",
-          "#precos",
-          "#atendimento",
-          "#duvidas"
-        ]
-      }
     }
   ]
 }
