@@ -1,8 +1,16 @@
 /**
  * Aplicação principal da landing page.
- * - Sem bibliotecas externas.
- * - Sem animações contínuas ou manipulação automática de rolagem.
- * - Todos os listeners são registrados uma única vez.
+ *
+ * Responsabilidades:
+ * - menu mobile acessível;
+ * - estado visual do cabeçalho;
+ * - botão de retorno ao topo;
+ * - acordeão da FAQ;
+ * - animações de entrada executadas uma única vez;
+ * - eventos de clique nos CTAs do WhatsApp.
+ *
+ * Não há bibliotecas externas, animações contínuas ou alteração automática
+ * da posição de rolagem da página.
  */
 (() => {
   'use strict';
@@ -24,23 +32,28 @@
     element.textContent = String(new Date().getFullYear());
   });
 
-  /** Controla o menu mobile e mantém os atributos de acessibilidade sincronizados. */
+  /** Fecha o menu mobile e sincroniza os atributos de acessibilidade. */
   const closeMenu = () => {
     if (!menu || !menuToggle) return;
+
     menu.classList.remove('is-open');
     menuToggle.setAttribute('aria-expanded', 'false');
     body.classList.remove('menu-open');
   };
 
+  /** Controla a abertura do menu mobile. */
   if (menu && menuToggle) {
     menuToggle.addEventListener('click', () => {
       const willOpen = menuToggle.getAttribute('aria-expanded') !== 'true';
+
       menu.classList.toggle('is-open', willOpen);
       menuToggle.setAttribute('aria-expanded', String(willOpen));
       body.classList.toggle('menu-open', willOpen);
     });
 
-    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+    menu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
 
     doc.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') closeMenu();
@@ -52,13 +65,14 @@
   }
 
   /**
-   * Cabeçalho e botão de retorno ao topo.
-   * requestAnimationFrame é usado apenas para limitar a frequência do evento,
-   * sem alterar a posição da página ou criar movimento repetitivo.
+   * Atualiza o cabeçalho e o botão de retorno ao topo.
+   * requestAnimationFrame limita a frequência sem criar movimento repetitivo.
    */
   let scrollTicking = false;
+
   const updateScrollState = () => {
     const scrollY = window.scrollY || doc.documentElement.scrollTop;
+
     header?.classList.toggle('is-scrolled', scrollY > 12);
     backToTop?.classList.toggle('is-visible', scrollY > 620);
     scrollTicking = false;
@@ -66,6 +80,7 @@
 
   window.addEventListener('scroll', () => {
     if (scrollTicking) return;
+
     scrollTicking = true;
     window.requestAnimationFrame(updateScrollState);
   }, { passive: true });
@@ -73,10 +88,16 @@
   updateScrollState();
 
   backToTop?.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+    window.scrollTo({
+      top: 0,
+      behavior: reduceMotion ? 'auto' : 'smooth'
+    });
   });
 
-  /** Accordion acessível. Apenas um item permanece aberto por vez. */
+  /**
+   * Acordeão acessível.
+   * Apenas um item permanece aberto por vez para facilitar a leitura mobile.
+   */
   doc.querySelectorAll('[data-accordion]').forEach((accordion) => {
     const buttons = [...accordion.querySelectorAll('.faq__question')];
 
@@ -89,6 +110,7 @@
         buttons.forEach((otherButton) => {
           const otherAnswerId = otherButton.getAttribute('aria-controls');
           const otherAnswer = otherAnswerId ? doc.getElementById(otherAnswerId) : null;
+
           otherButton.setAttribute('aria-expanded', 'false');
           if (otherAnswer) otherAnswer.hidden = true;
         });
@@ -100,22 +122,27 @@
   });
 
   /**
-   * Animações de entrada executadas uma única vez.
-   * O elemento é removido do observer após aparecer, evitando loops visuais.
+   * Animações de entrada executadas somente uma vez.
+   * Cada elemento é removido do observer após aparecer.
    */
   const revealElements = doc.querySelectorAll('.reveal');
 
   if (reduceMotion || !('IntersectionObserver' in window)) {
     revealElements.forEach((element) => element.classList.add('is-visible'));
   } else {
-    document.documentElement.classList.add('reveal-ready');
+    doc.documentElement.classList.add('reveal-ready');
+
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
+
         entry.target.classList.add('is-visible');
         observer.unobserve(entry.target);
       });
-    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    }, {
+      rootMargin: '0px 0px -8% 0px',
+      threshold: 0.08
+    });
 
     revealElements.forEach((element) => revealObserver.observe(element));
   }

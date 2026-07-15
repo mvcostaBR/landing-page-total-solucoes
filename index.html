@@ -20,10 +20,11 @@
   <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="./favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png" sizes="180x180">
-
   <link rel="preload" as="image" href="./assets/img/hero-higienizacao-split.svg" type="image/svg+xml" fetchpriority="high">
-  <link rel="stylesheet" href="./assets/css/critical.css?v=20260714-copy-palette1">
-  <link rel="stylesheet" href="./assets/css/main.css?v=20260714-copy-palette1">
+
+  <!-- Caminhos relativos mantêm o projeto compatível com GitHub Pages. -->
+  <link rel="stylesheet" href="./assets/css/critical.css?v=20260715-design2">
+  <link rel="stylesheet" href="./assets/css/main.css?v=20260715-design2">
 
   <meta property="og:locale" content="pt_BR">
   <meta property="og:type" content="website">
@@ -41,11 +42,11 @@
   <meta name="twitter:description" content="Higienização residencial de modelos Split no Rio de Janeiro, com valores e atendimento pelo WhatsApp.">
   <meta name="twitter:image" content="https://www.totalsolucoesprediais.com.br/assets/img/og/higienizacao-split-total-solucoes-1200x630.png">
 
-  <!-- Consentimento deve ser inicializado antes das integrações de mensuração. -->
-  <script src="./assets/js/consent.js?v=20260714-copy-palette1" defer></script>
+  <!-- Consentimento é inicializado antes das integrações de mensuração. -->
+  <script src="./assets/js/consent.js?v=20260715-design2" defer></script>
   <script
     id="tsp-analytics"
-    src="./assets/js/analytics.js?v=20260714-copy-palette1"
+    src="./assets/js/analytics.js?v=20260715-design2"
     data-gtm-id=""
     data-ga4-id=""
     data-google-ads-id=""
@@ -55,187 +56,269 @@
     data-debug="false"
     defer
   ></script>
-  <script src="./assets/js/app.js?v=20260714-copy-palette1" defer></script>
+  <script src="./assets/js/app.js?v=20260715-design2" defer></script>
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "ImageObject",
-        "@id": "https://www.totalsolucoesprediais.com.br/#logo",
-        "name": "Logo da Total Soluções Prediais",
-        "url": "https://www.totalsolucoesprediais.com.br/assets/icons/icon-512.png",
-        "contentUrl": "https://www.totalsolucoesprediais.com.br/assets/icons/icon-512.png",
-        "width": 512,
-        "height": 512,
-        "caption": "Total Soluções Prediais",
-        "inLanguage": "pt-BR"
-      },
-      {
-        "@type": ["Organization", "LocalBusiness", "HVACBusiness"],
-        "@id": "https://www.totalsolucoesprediais.com.br/#business",
-        "name": "Total Soluções Prediais",
-        "url": "https://www.totalsolucoesprediais.com.br/",
-        "logo": {"@id": "https://www.totalsolucoesprediais.com.br/#logo"},
-        "image": {"@id": "https://www.totalsolucoesprediais.com.br/#logo"},
-        "foundingDate": "2014",
-        "description": "Empresa especializada em higienização de ar condicionado Split residencial no Rio de Janeiro.",
-        "telephone": "+55-21-3337-0084",
-        "email": "michel@totalsolucoesprediais.com.br",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Av. Embaixador Abelardo Bueno, 1111 - Sala 126 Office",
-          "addressLocality": "Rio de Janeiro",
-          "addressRegion": "RJ",
-          "addressCountry": "BR"
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "ImageObject",
+          "@id": "https://www.totalsolucoesprediais.com.br/#logo",
+          "name": "Logo da Total Soluções Prediais",
+          "url": "https://www.totalsolucoesprediais.com.br/assets/icons/icon-512.png",
+          "contentUrl": "https://www.totalsolucoesprediais.com.br/assets/icons/icon-512.png",
+          "width": 512,
+          "height": 512,
+          "caption": "Total Soluções Prediais",
+          "inLanguage": "pt-BR"
         },
-        "areaServed": [
-          "Barra da Tijuca", "Recreio dos Bandeirantes", "Freguesia", "Leblon",
-          "São Conrado", "Joá", "Jardim Botânico", "Lagoa", "Botafogo"
-        ],
-        "openingHoursSpecification": {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-          "opens": "08:00",
-          "closes": "18:00"
+        {
+          "@type": [
+            "Organization",
+            "LocalBusiness",
+            "HVACBusiness"
+          ],
+          "@id": "https://www.totalsolucoesprediais.com.br/#business",
+          "name": "Total Soluções Prediais",
+          "url": "https://www.totalsolucoesprediais.com.br/",
+          "logo": {
+            "@id": "https://www.totalsolucoesprediais.com.br/#logo"
+          },
+          "image": {
+            "@id": "https://www.totalsolucoesprediais.com.br/#logo"
+          },
+          "foundingDate": "2014",
+          "description": "Empresa especializada em higienização de ar condicionado Split residencial no Rio de Janeiro.",
+          "telephone": "+55-21-3337-0084",
+          "email": "michel@totalsolucoesprediais.com.br",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. Embaixador Abelardo Bueno, 1111 - Sala 126 Office",
+            "addressLocality": "Rio de Janeiro",
+            "addressRegion": "RJ",
+            "addressCountry": "BR"
+          },
+          "areaServed": [
+            "Barra da Tijuca",
+            "Recreio dos Bandeirantes",
+            "Freguesia",
+            "Leblon",
+            "São Conrado",
+            "Joá",
+            "Jardim Botânico",
+            "Lagoa",
+            "Botafogo"
+          ],
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "08:00",
+            "closes": "18:00"
+          },
+          "parentOrganization": {
+            "@type": "Organization",
+            "name": "Grupo Total Soluções",
+            "logo": "https://www.totalsolucoesprediais.com.br/assets/img/logo-grupo-total-solucoes.webp"
+          }
         },
-        "parentOrganization": {
-          "@type": "Organization",
-          "name": "Grupo Total Soluções",
-          "logo": "https://www.totalsolucoesprediais.com.br/assets/img/logo-grupo-total-solucoes.jpg"
+        {
+          "@type": "WebSite",
+          "@id": "https://www.totalsolucoesprediais.com.br/#website",
+          "url": "https://www.totalsolucoesprediais.com.br/",
+          "name": "Total Soluções Prediais",
+          "publisher": {
+            "@id": "https://www.totalsolucoesprediais.com.br/#business"
+          },
+          "inLanguage": "pt-BR"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#webpage",
+          "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split",
+          "name": "Higienização de Ar Condicionado Split no Rio de Janeiro",
+          "description": "Higienização de ar condicionado Split residencial, com valores, bairros atendidos e agendamento pelo WhatsApp.",
+          "isPartOf": {
+            "@id": "https://www.totalsolucoesprediais.com.br/#website"
+          },
+          "about": {
+            "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
+          },
+          "breadcrumb": {
+            "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#breadcrumb"
+          },
+          "inLanguage": "pt-BR",
+          "speakable": {
+            "@type": "SpeakableSpecification",
+            "cssSelector": [
+              "#hero-title",
+              ".hero__lead",
+              "#resumo-servico",
+              "#faq-title"
+            ]
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Higienização de Ar Condicionado Split",
+              "item": "https://www.totalsolucoesprediais.com.br/higienizacao-split"
+            }
+          ]
+        },
+        {
+          "@type": "Service",
+          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service",
+          "name": "Higienização de Ar Condicionado Residencial Split",
+          "serviceType": "Higienização de ar condicionado Split residencial",
+          "provider": {
+            "@id": "https://www.totalsolucoesprediais.com.br/#business"
+          },
+          "areaServed": [
+            "Barra da Tijuca",
+            "Recreio dos Bandeirantes",
+            "Freguesia",
+            "Leblon",
+            "São Conrado",
+            "Joá",
+            "Jardim Botânico",
+            "Lagoa",
+            "Botafogo"
+          ],
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Higienização da evaporadora Split de 9.000 a 18.000 BTUs",
+              "price": "350.00",
+              "priceCurrency": "BRL",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
+            },
+            {
+              "@type": "Offer",
+              "name": "Higienização da evaporadora Split de 22.000 a 30.000 BTUs",
+              "price": "450.00",
+              "priceCurrency": "BRL",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
+            },
+            {
+              "@type": "Offer",
+              "name": "Higienização adicional da condensadora após avaliação no local",
+              "price": "150.00",
+              "priceCurrency": "BRL",
+              "availability": "https://schema.org/InStock",
+              "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
+            }
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Quais aparelhos a Total Soluções Prediais atende?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Realizamos a higienização de ar condicionado residencial exclusivamente para modelos Split de 9.000 a 30.000 BTUs. Não atendemos aparelhos de janela."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quanto custa a higienização do ar condicionado Split?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Os valores da unidade evaporadora são R$350,00 para Split de 9.000 a 18.000 BTUs e R$450,00 para Split de 22.000 a 30.000 BTUs. Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados R$150,00 por unidade."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Em quais bairros a Total Soluções Prediais atende?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Atendemos na Barra, Recreio, Freguesia, Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo, no Rio de Janeiro."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Qual é o horário de atendimento?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Atendemos de segunda a sexta-feira, das 8h às 18h. Atendimento e agendamento exclusivos pelo WhatsApp."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Quais serviços não estão incluídos?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Não estão incluídos manutenção corretiva, instalação, troca de peças, PMOC, projetos ou atendimento a equipamentos comerciais, industriais e aparelhos de janela."
+              }
+            }
+          ]
         }
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://www.totalsolucoesprediais.com.br/#website",
-        "url": "https://www.totalsolucoesprediais.com.br/",
-        "name": "Total Soluções Prediais",
-        "publisher": {"@id": "https://www.totalsolucoesprediais.com.br/#business"},
-        "inLanguage": "pt-BR"
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#webpage",
-        "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split",
-        "name": "Higienização de Ar Condicionado Split no Rio de Janeiro",
-        "description": "Higienização de ar condicionado Split residencial, com valores, bairros atendidos e agendamento pelo WhatsApp.",
-        "isPartOf": {"@id": "https://www.totalsolucoesprediais.com.br/#website"},
-        "about": {"@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"},
-        "breadcrumb": {"@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#breadcrumb"},
-        "inLanguage": "pt-BR",
-        "speakable": {
-          "@type": "SpeakableSpecification",
-          "cssSelector": ["#hero-title", ".hero__lead", "#resumo-servico", "#faq-title"]
-        }
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#breadcrumb",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Higienização de Ar Condicionado Split",
-            "item": "https://www.totalsolucoesprediais.com.br/higienizacao-split"
-          }
-        ]
-      },
-      {
-        "@type": "Service",
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service",
-        "name": "Higienização de Ar Condicionado Residencial Split",
-        "serviceType": "Higienização de ar condicionado Split residencial",
-        "provider": {"@id": "https://www.totalsolucoesprediais.com.br/#business"},
-        "areaServed": [
-          "Barra da Tijuca", "Recreio dos Bandeirantes", "Freguesia", "Leblon",
-          "São Conrado", "Joá", "Jardim Botânico", "Lagoa", "Botafogo"
-        ],
-        "audience": {
-          "@type": "Audience",
-          "audienceType": "Moradores de apartamentos e casas"
-        },
-        "offers": [
-          {
-            "@type": "Offer",
-            "name": "Higienização da evaporadora Split de 9.000 a 18.000 BTUs",
-            "price": "350.00",
-            "priceCurrency": "BRL",
-            "availability": "https://schema.org/InStock",
-            "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
-          },
-          {
-            "@type": "Offer",
-            "name": "Higienização da evaporadora Split de 22.000 a 30.000 BTUs",
-            "price": "450.00",
-            "priceCurrency": "BRL",
-            "availability": "https://schema.org/InStock",
-            "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
-          },
-          {
-            "@type": "Offer",
-            "name": "Higienização adicional da condensadora, quando necessária após avaliação no local",
-            "price": "150.00",
-            "priceCurrency": "BRL",
-            "availability": "https://schema.org/LimitedAvailability",
-            "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
-          }
-        ]
-      },
-      {
-        "@type": "FAQPage",
-        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#faq",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "Quais aparelhos a Total Soluções Prediais atende?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A empresa realiza, nesta oferta, a higienização de ar condicionado residencial exclusivamente para modelos Split de 9.000 a 30.000 BTUs. Aparelhos de janela não são atendidos."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Quanto custa a higienização do ar condicionado Split?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Os valores da unidade evaporadora são R$350,00 para Split de 9.000 a 18.000 BTUs e R$450,00 para Split de 22.000 a 30.000 BTUs. Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados R$150,00 por unidade."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Em quais bairros a Total Soluções Prediais atende?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Atendimento na Barra, Recreio, Freguesia, Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo, no Rio de Janeiro."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Qual é o horário de atendimento?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "O atendimento ocorre de segunda a sexta-feira, das 8h às 18h, com contato e agendamento exclusivamente pelo WhatsApp."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Quais serviços não estão incluídos?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Esta oferta não inclui manutenção corretiva, instalação, troca de peças, PMOC, projetos ou atendimento a equipamentos comerciais, industriais e aparelhos de janela."
-            }
-          }
-        ]
-      }
-    ]
-  }
+      ]
+    }
   </script>
 </head>
-
 <body>
   <a class="skip-link" href="#conteudo-principal">Ir para o conteúdo principal</a>
 
+  <!-- Sprite SVG próprio: ícones reutilizáveis sem bibliotecas externas. -->
+  <svg class="visually-hidden" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="icon-whatsapp" viewBox="0 0 24 24">
+      <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .4 5.2.4 11.7c0 2.1.6 4.2 1.6 6L0 24l6.5-1.7c1.8 1 3.8 1.5 5.8 1.5h.1c6.4 0 11.6-5.2 11.6-11.7 0-3.1-1.2-6.1-3.5-8.6Zm-8.1 18.3h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.7 9.7 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.5Z"/>
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24">
+      <path d="M12 2 4 5v6c0 5.2 3.4 9.8 8 11 4.6-1.2 8-5.8 8-11V5l-8-3Zm0 17.8C8.8 18.7 6 15.1 6 11V6.4l6-2.2 6 2.2V11c0 4.1-2.8 7.7-6 8.8Z"/>
+    </symbol>
+    <symbol id="icon-split" viewBox="0 0 24 24">
+      <path d="M3 4h18a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 2v6h18V6H3Zm2 3h14v1H5V9Zm2 7h2c0 1.1-.9 2-2 2v-2Zm4 0h2c0 2.2-1.8 4-4 4v-2c1.1 0 2-.9 2-2Zm4 0h2c0 3.3-2.7 6-6 6v-2c2.2 0 4-1.8 4-4Z"/>
+    </symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24">
+      <path d="m12 3 9 8h-2v10h-6v-6h-2v6H5V11H3l9-8Zm0 2.7L7 10.1V19h2v-6h6v6h2v-8.9l-5-4.4Z"/>
+    </symbol>
+    <symbol id="icon-family" viewBox="0 0 24 24">
+      <path d="M8 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm8-1a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM8 13c-4 0-6 2-6 5v2h12v-2c0-3-2-5-6-5Zm8-1c-.8 0-1.6.1-2.2.4 1.5 1.1 2.2 2.8 2.2 5.1V20h6v-2c0-3.6-2-6-6-6Z"/>
+    </symbol>
+    <symbol id="icon-air" viewBox="0 0 24 24">
+      <path d="M3 7h10a3 3 0 1 0-3-3h2a1 1 0 1 1 1 1H3v2Zm0 5h15a3 3 0 1 1-3 3h2a1 1 0 1 0 1-1H3v-2Zm0 5h8a3 3 0 1 1-3 3h2a1 1 0 1 0 1-1H3v-2Z"/>
+    </symbol>
+    <symbol id="icon-engineering" viewBox="0 0 24 24">
+      <path d="m21.2 13.7-2-.8c.1-.6.1-1.2 0-1.8l2-.8-1.5-3.6-2 .8a8 8 0 0 0-1.3-1.3l.8-2L13.6 2l-.8 2a7 7 0 0 0-1.8 0l-.8-2-3.6 1.5.8 2a8 8 0 0 0-1.3 1.3l-2-.8L2 9.6l2 .8a7 7 0 0 0 0 1.8l-2 .8 1.5 3.6 2-.8a8 8 0 0 0 1.3 1.3l-.8 2 3.6 1.5.8-2a7 7 0 0 0 1.8 0l.8 2 3.6-1.5-.8-2a8 8 0 0 0 1.3-1.3l2 .8 1.5-3.6ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+    </symbol>
+    <symbol id="icon-price" viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm1 15.9V20h-2v-2.1c-1.8-.3-3-1.4-3.1-3.1h2c.1.8.8 1.4 2.1 1.4 1.2 0 2-.5 2-1.3 0-.7-.6-1.1-2.3-1.5-2.3-.5-3.5-1.5-3.5-3.3 0-1.7 1.1-2.8 2.8-3.1V5h2v2c1.7.3 2.8 1.4 2.9 3h-2c-.1-.8-.8-1.3-1.9-1.3s-1.8.5-1.8 1.2c0 .7.6 1.1 2.3 1.5 2.4.6 3.5 1.5 3.5 3.3 0 1.7-1.2 2.9-3 3.2Z"/>
+    </symbol>
+    <symbol id="icon-pin" viewBox="0 0 24 24">
+      <path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 17c-2.2-2.8-5-7.2-5-10a5 5 0 0 1 10 0c0 2.8-2.8 7.2-5 10Zm0-7a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+    </symbol>
+    <symbol id="icon-clock" viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8Zm1-13h-2v6l5 3 .9-1.5-3.9-2.3V7Z"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="m9 16.2-3.5-3.5L4 14.2l5 5L20 8.1l-1.5-1.5Z"/>
+    </symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/>
+    </symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24">
+      <path d="m12 5-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12l-7-7Z"/>
+    </symbol>
+  </svg>
+
+  <!-- Cabeçalho -->
   <header class="site-header" id="topo" data-header>
     <div class="container site-header__inner">
       <a class="brand" href="#topo" aria-label="Total Soluções Prediais - voltar ao início da página">
@@ -266,24 +349,27 @@
         data-whatsapp
         data-cta-location="header"
       >
-        <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .4 5.2.4 11.7c0 2.1.6 4.2 1.6 6L0 24l6.5-1.7c1.8 1 3.8 1.5 5.8 1.5h.1c6.4 0 11.6-5.2 11.6-11.7 0-3.1-1.2-6.1-3.5-8.6Zm-8.1 18.3h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.7 9.7 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.5Z"/></svg>
+        <svg class="icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg>
         Garantir Meu Ar Puro Agora
       </a>
     </div>
   </header>
 
-  <!-- Breadcrumb solicitado sem link e visualmente imperceptível para o visitante. -->
-  <nav class="breadcrumb breadcrumb--concealed" aria-label="Caminho da página" aria-hidden="true">
-    <div class="container">Higienização de Ar Condicionado Split</div>
+  <!-- Breadcrumb mantido para semântica, sem faixa visual. -->
+  <nav class="breadcrumb--concealed" aria-label="Breadcrumb">
+    <div class="container">
+      <span aria-current="page">Higienização de Ar Condicionado Split</span>
+    </div>
   </nav>
 
   <main id="conteudo-principal">
+    <!-- Hero -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="container hero__grid">
         <div class="hero__content">
           <p class="eyebrow">MAIS CONFORTO PARA A SUA CASA</p>
-          <h1 id="hero-title">Higienização de Ar Condicionado Residencial Split</h1>
-          <p class="hero__lead">Deixe o ar da sua casa mais leve e agradável com uma higienização cuidadosa do seu Split, realizada em apartamentos e casas das zonas Oeste e Sul do Rio de Janeiro.</p>
+          <h1 id="hero-title">Higienização de <span class="desktop-nowrap">Ar Condicionado</span> Residencial Split</h1>
+          <p class="hero__lead">Deixe o ar da sua casa mais leve e agradável com uma higienização cuidadosa do seu ar condicionado split. Atendimento especializado para apartamentos e casas no Rio de Janeiro.</p>
 
           <div class="hero__actions">
             <a
@@ -294,7 +380,7 @@
               data-whatsapp
               data-cta-location="hero"
             >
-              <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .4 5.2.4 11.7c0 2.1.6 4.2 1.6 6L0 24l6.5-1.7c1.8 1 3.8 1.5 5.8 1.5h.1c6.4 0 11.6-5.2 11.6-11.7 0-3.1-1.2-6.1-3.5-8.6Zm-8.1 18.3h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.7 9.7 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.5Z"/></svg>
+              <svg class="icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg>
               Garantir Meu Ar Puro Agora
             </a>
             <a class="button button--secondary button--large" href="#precos">Ver preços</a>
@@ -302,21 +388,15 @@
 
           <ul class="hero-facts" aria-label="Diferenciais do atendimento">
             <li>
-              <span class="hero-facts__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 10.4 3.3 2-.8 1.3-4-2.5V7h1.5Z"/></svg>
-              </span>
+              <span class="hero-facts__icon" aria-hidden="true"><svg><use href="#icon-shield"></use></svg></span>
               <span><strong>Experiência comprovada</strong><small>Atuação com excelência desde 2014.</small></span>
             </li>
             <li>
-              <span class="hero-facts__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M20 5H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h1v2h2v-2h10v2h2v-2h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 9H4V7h16Zm-3-4h2v2h-2ZM5 9h10v2H5Z"/></svg>
-              </span>
+              <span class="hero-facts__icon" aria-hidden="true"><svg><use href="#icon-split"></use></svg></span>
               <span><strong>Split residencial</strong><small>Modelos de 9.000 a 30.000 BTUs.</small></span>
             </li>
             <li>
-              <span class="hero-facts__icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24"><path d="M12 1a11 11 0 0 0-9.5 16.5L1 23l5.7-1.5A11 11 0 1 0 12 1Zm0 20a9 9 0 0 1-4.6-1.3l-.3-.2-3.4.9.9-3.3-.2-.4A9 9 0 1 1 12 21Z"/></svg>
-              </span>
+              <span class="hero-facts__icon" aria-hidden="true"><svg><use href="#icon-whatsapp"></use></svg></span>
               <span><strong>Atendimento pelo WhatsApp</strong><small>Rápido, prestativo e exclusivo.</small></span>
             </li>
           </ul>
@@ -328,45 +408,47 @@
       </div>
     </section>
 
-    <section class="section section--summary" aria-labelledby="resumo-title">
+    <!-- Resumo comercial -->
+    <section class="section section--summary" aria-labelledby="resumo-servico">
       <div class="container">
         <div class="section-heading section-heading--center">
           <p class="eyebrow">COMECE POR AQUI</p>
-          <h2 id="resumo-title">Serviço, preço e atendimento sem complicação</h2>
-          <p id="resumo-servico">Conheça o nosso serviço, confira os valores e bairros atendidos e faça seu agendamento pelo WhatsApp.</p>
+          <h2 id="resumo-servico">Serviço, preço e atendimento sem complicação</h2>
+          <p>Conheça o nosso serviço, confira os valores e bairros atendidos e faça o agendamento pelo WhatsApp. Ajudamos a cuidar da saúde de você e da sua família.</p>
         </div>
 
         <div class="answer-grid">
           <article class="answer-card reveal">
-            <span class="answer-card__number">01</span>
+            <span class="answer-card__icon" aria-hidden="true"><svg><use href="#icon-split"></use></svg></span>
             <h3>O que é oferecido?</h3>
-            <p>Higienização de ar condicionado residencial, exclusivamente para modelos Split. Não atendemos aparelhos de janela nesta oferta.</p>
+            <p>Higienização de ar condicionado residencial, exclusivamente para modelos Split. Não trabalhamos com aparelhos de janela.</p>
           </article>
 
           <article class="answer-card reveal">
-            <span class="answer-card__number">02</span>
+            <span class="answer-card__icon" aria-hidden="true"><svg><use href="#icon-price"></use></svg></span>
             <h3>Quanto custa?</h3>
-            <p>A higienização da unidade evaporadora custa <strong>R$350,00</strong> (Split de 9.000 a 18.000 BTUs) ou <strong>R$450,00</strong> (Split de 22.000 a 30.000 BTUs). Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados <strong>R$150,00 por unidade</strong>.</p>
+            <p>A higienização da unidade evaporadora do aparelho custa R$350,00 (Split de 9.000 a 18.000 BTUs) ou R$450,00 (Split de 22.000 a 30.000 BTUs). Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados R$150,00 por unidade.</p>
           </article>
 
           <article class="answer-card reveal">
-            <span class="answer-card__number">03</span>
+            <span class="answer-card__icon" aria-hidden="true"><svg><use href="#icon-pin"></use></svg></span>
             <h3>Onde atende?</h3>
             <p>Atendemos nos seguintes bairros do Rio de Janeiro: Barra, Recreio, Freguesia, Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo.</p>
           </article>
 
           <article class="answer-card reveal">
-            <span class="answer-card__number">04</span>
+            <span class="answer-card__icon" aria-hidden="true"><svg><use href="#icon-clock"></use></svg></span>
             <h3>Qual o horário?</h3>
-            <p>Atendemos de segunda a sexta-feira, das <strong>8h às 18h</strong>. O atendimento e o agendamento são exclusivos pelo WhatsApp.</p>
+            <p>Atendemos de segunda a sexta-feira, das 8h às 18h. Atendimento e agendamento exclusivos pelo WhatsApp.</p>
           </article>
         </div>
       </div>
     </section>
 
+    <!-- Benefícios -->
     <section class="section" id="beneficios" aria-labelledby="beneficios-title">
       <div class="container">
-        <div class="section-heading">
+        <div class="section-heading section-heading--center">
           <p class="eyebrow">SAÚDE, FAMÍLIA E CONFORTO</p>
           <h2 id="beneficios-title">Qualidade do ar começa no cuidado com o equipamento</h2>
           <p>A higienização ajuda a manter o ambiente residencial mais limpo, confortável e integrado a uma rotina de prevenção e bem-estar.</p>
@@ -374,49 +456,39 @@
 
         <div class="benefit-grid">
           <article class="benefit-card reveal">
-            <span class="benefit-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2 4 5v6c0 5.1 3.4 9.8 8 11 4.6-1.2 8-5.9 8-11V5Zm0 17.8C8.8 18.7 6 15 6 11V6.4l6-2.2 6 2.2V11c0 4-2.8 7.7-6 8.8Zm-1-5.4-2.3-2.3 1.4-1.4.9.9 3-3 1.4 1.4Z"/></svg>
-            </span>
+            <span class="benefit-card__icon" aria-hidden="true"><svg><use href="#icon-shield"></use></svg></span>
             <h3>Prevenção responsável</h3>
             <p>Cuidado periódico com foco em limpeza, conservação e uso consciente do equipamento.</p>
           </article>
-
           <article class="benefit-card reveal">
-            <span class="benefit-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2c-3 3.3-6 6.9-6 11a6 6 0 0 0 12 0c0-4.1-3-7.7-6-11Zm0 15a4 4 0 0 1-4-4c0-2.4 1.5-4.9 4-8 2.5 3.1 4 5.6 4 8a4 4 0 0 1-4 4Zm-2.8-3.5a2.8 2.8 0 0 0 2.8 2.8v-2a.8.8 0 0 1-.8-.8Z"/></svg>
-            </span>
+            <span class="benefit-card__icon" aria-hidden="true"><svg><use href="#icon-air"></use></svg></span>
             <h3>Qualidade do ar</h3>
             <p>Uma rotina de higienização contribui para um ambiente residencial mais limpo e agradável.</p>
           </article>
-
           <article class="benefit-card reveal">
-            <span class="benefit-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M16 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4ZM8 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Zm8 2c-3.3 0-6 1.8-6 4v3h12v-3c0-2.2-2.7-4-6-4ZM8 13c-3.3 0-6 1.8-6 4v3h6v-3a4.8 4.8 0 0 1 1.2-3.1A9 9 0 0 0 8 13Z"/></svg>
-            </span>
+            <span class="benefit-card__icon" aria-hidden="true"><svg><use href="#icon-family"></use></svg></span>
             <h3>Bem-estar da família</h3>
             <p>Mais cuidado com os espaços em que a família descansa, convive e respira todos os dias.</p>
           </article>
-
           <article class="benefit-card reveal">
-            <span class="benefit-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="m22 7-3-3-4 4-2-2-9 9v4h4l9-9 2 2Zm-15 10H6v-1l7-7 1 1Zm12-7-3-3 3-3 3 3ZM2 22h20v-2H2Z"/></svg>
-            </span>
+            <span class="benefit-card__icon" aria-hidden="true"><svg><use href="#icon-engineering"></use></svg></span>
             <h3>Critério técnico</h3>
             <p>Atendimento realizado por uma empresa especializada, com experiência comprovada.</p>
           </article>
         </div>
 
-        <aside class="did-you-know reveal" aria-labelledby="sabia-title">
+        <aside class="did-you-know reveal" aria-labelledby="voce-sabia-title">
           <div class="did-you-know__mark" aria-hidden="true">?</div>
           <div>
-            <h3 id="sabia-title">Você sabia?</h3>
-            <p>Respirar o ar de um equipamento sujo pode ser comparado a beber água contaminada: nos dois casos, a qualidade do que circula faz diferença no dia a dia. Por isso, manter o Split higienizado é um cuidado simples com o conforto da sua casa.</p>
+            <h3 id="voce-sabia-title">Você sabia?</h3>
+            <p>Respirar o ar de um equipamento sujo pode ser comparado a beber água contaminada: nos dois casos, a qualidade faz muita diferença no dia a dia. Por isso, manter o Split higienizado é um cuidado simples com o conforto da sua casa.</p>
             <small>Esta comparação é educativa e não representa diagnóstico, tratamento ou promessa médica.</small>
           </div>
         </aside>
       </div>
     </section>
 
+    <!-- Escopo do serviço -->
     <section class="section section--soft" aria-labelledby="servico-title">
       <div class="container service-layout">
         <div>
@@ -427,18 +499,16 @@
           </div>
 
           <ul class="check-list">
-            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 16.2-3.5-3.5L4 14.2l5 5L20 8.1l-1.5-1.5Z"/></svg>Atendimento cuidadoso em apartamentos e casas.</li>
-            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 16.2-3.5-3.5L4 14.2l5 5L20 8.1l-1.5-1.5Z"/></svg>Limpeza pensada para mais conforto e melhor qualidade do ar.</li>
-            <li><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m9 16.2-3.5-3.5L4 14.2l5 5L20 8.1l-1.5-1.5Z"/></svg>Agendamento rápido e exclusivo pelo WhatsApp.</li>
+            <li><svg aria-hidden="true"><use href="#icon-check"></use></svg>Atendimento cuidadoso em apartamentos e casas.</li>
+            <li><svg aria-hidden="true"><use href="#icon-check"></use></svg>Limpeza pensada para mais conforto e melhor qualidade do ar.</li>
+            <li><svg aria-hidden="true"><use href="#icon-check"></use></svg>Agendamento rápido e exclusivo pelo WhatsApp.</li>
           </ul>
         </div>
 
         <aside class="scope-card reveal" aria-labelledby="fora-escopo-title">
-          <span class="scope-card__icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
-          </span>
-          <h3 id="fora-escopo-title">O que não faz parte desta oferta</h3>
-          <p>Manutenção corretiva, instalação, troca de peças, PMOC, projetos e atendimento a equipamentos comerciais, industriais ou de janela não fazem parte do serviço apresentado nesta página.</p>
+          <span class="scope-card__icon" aria-hidden="true"><svg><use href="#icon-alert"></use></svg></span>
+          <h3 id="fora-escopo-title">O que não faz parte deste serviço</h3>
+          <p>Manutenção corretiva, instalação, troca de peças, PMOC, projetos e atendimento a equipamentos comerciais, industriais ou de janela não fazem parte do serviço oferecido nesta página.</p>
           <p class="scope-card__help">Para informações institucionais sobre outras soluções da empresa, fale com a nossa equipe.</p>
           <a
             class="button button--outline"
@@ -452,6 +522,7 @@
       </div>
     </section>
 
+    <!-- Preços -->
     <section class="section section--prices" id="precos" aria-labelledby="precos-title">
       <div class="container">
         <div class="section-heading section-heading--center section-heading--light">
@@ -464,7 +535,9 @@
           <article class="price-card reveal">
             <p class="price-card__label">UNIDADE EVAPORADORA</p>
             <h3>Split de 9.000 a 18.000 BTUs</h3>
-            <p class="price-card__price"><span>R$</span>350<span>,00</span></p>
+            <div class="price-card__center">
+              <p class="price-card__price"><span>R$</span>350<span>,00</span></p>
+            </div>
             <a
               class="button button--primary button--full"
               href="https://wa.me/5521964051050?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20da%20Total%20Solu%C3%A7%C3%B5es%20Prediais%20e%20quero%20agendar%20a%20higieniza%C3%A7%C3%A3o%20do%20meu%20ar%20condicionado%20Split%20para%20proteger%20a%20sa%C3%BAde%20da%20minha%20fam%C3%ADlia.%20Podem%20me%20passar%20as%20orienta%C3%A7%C3%B5es%3F"
@@ -475,11 +548,12 @@
             >Garantir Meu Ar Puro Agora</a>
           </article>
 
-          <article class="price-card price-card--featured reveal">
-            <span class="price-card__badge">MAIOR CAPACIDADE</span>
+          <article class="price-card reveal">
             <p class="price-card__label">UNIDADE EVAPORADORA</p>
             <h3>Split de 22.000 a 30.000 BTUs</h3>
-            <p class="price-card__price"><span>R$</span>450<span>,00</span></p>
+            <div class="price-card__center">
+              <p class="price-card__price"><span>R$</span>450<span>,00</span></p>
+            </div>
             <a
               class="button button--primary button--full"
               href="https://wa.me/5521964051050?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20da%20Total%20Solu%C3%A7%C3%B5es%20Prediais%20e%20quero%20agendar%20a%20higieniza%C3%A7%C3%A3o%20do%20meu%20ar%20condicionado%20Split%20para%20proteger%20a%20sa%C3%BAde%20da%20minha%20fam%C3%ADlia.%20Podem%20me%20passar%20as%20orienta%C3%A7%C3%B5es%3F"
@@ -493,7 +567,7 @@
 
         <aside class="condenser-note reveal" aria-label="Valor adicional para higienização da condensadora">
           <div>
-            <strong>Condensadora, quando necessária</strong>
+            <strong>Condensadora</strong>
             <p>A higienização é realizada somente após a necessidade ser verificada no local, durante o atendimento da evaporadora.</p>
           </div>
           <p class="condenser-note__price">+ R$150,00 <small>por unidade</small></p>
@@ -513,6 +587,7 @@
       </div>
     </section>
 
+    <!-- Avaliações -->
     <section class="section" id="depoimentos" aria-labelledby="depoimentos-title">
       <div class="container">
         <div class="section-heading section-heading--center">
@@ -526,19 +601,16 @@
             <blockquote>“Ar funcionando perfeitamente, mas o diferencial é a capacidade técnica da empresa e a transparência para resolver as questões com tranquilidade e sinceridade nos serviços! Parabéns!!!”</blockquote>
             <figcaption>Felipe</figcaption>
           </figure>
-
           <figure class="review-card reveal">
             <div class="review-card__stars" aria-label="5 de 5 estrelas">★★★★★</div>
             <blockquote>“Serviço executado com maestria e profissionais bem capacitados. Excelente serviço.”</blockquote>
             <figcaption>Alexandre Mesquita</figcaption>
           </figure>
-
           <figure class="review-card reveal">
             <div class="review-card__stars" aria-label="5 de 5 estrelas">★★★★★</div>
             <blockquote>“Ótima empresa. Profissionais competentes.”</blockquote>
             <figcaption>Tais Oliveira</figcaption>
           </figure>
-
           <figure class="review-card reveal">
             <div class="review-card__stars" aria-label="5 de 5 estrelas">★★★★★</div>
             <blockquote>“Muito bom. Super profissional.”</blockquote>
@@ -548,35 +620,28 @@
       </div>
     </section>
 
+    <!-- Área de atendimento -->
     <section class="section section--soft" id="atendimento" aria-labelledby="atendimento-title">
       <div class="container">
         <div class="section-heading section-heading--center">
           <p class="eyebrow">ÁREA DE ATENDIMENTO</p>
           <h2 id="atendimento-title">Bairros atendidos</h2>
-          <p>Atendimento residencial em bairros selecionados das zonas Oeste e Sul do Rio de Janeiro.</p>
+          <p>Atendimento residencial em diversos bairros das zonas Oeste e Sul do Rio de Janeiro.</p>
         </div>
 
         <div class="service-area-grid">
           <article class="area-card reveal">
-            <span class="area-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 10a3 3 0 1 1 3-3 3 3 0 0 1-3 3Z"/></svg>
-            </span>
+            <span class="area-card__icon" aria-hidden="true"><svg><use href="#icon-pin"></use></svg></span>
             <h3>Zona Oeste</h3>
             <p>Barra, Recreio e Freguesia.</p>
           </article>
-
           <article class="area-card reveal">
-            <span class="area-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 10a3 3 0 1 1 3-3 3 3 0 0 1-3 3Z"/></svg>
-            </span>
+            <span class="area-card__icon" aria-hidden="true"><svg><use href="#icon-pin"></use></svg></span>
             <h3>Zona Sul</h3>
             <p>Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo.</p>
           </article>
-
           <article class="area-card area-card--hours reveal">
-            <span class="area-card__icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Zm1 10.4 3.3 2-.8 1.3-4-2.5V7h1.5Z"/></svg>
-            </span>
+            <span class="area-card__icon" aria-hidden="true"><svg><use href="#icon-clock"></use></svg></span>
             <h3>Horário</h3>
             <p>Segunda a sexta-feira<br><strong>8h às 18h</strong></p>
           </article>
@@ -584,6 +649,7 @@
       </div>
     </section>
 
+    <!-- Autoridade -->
     <section class="section section--authority" aria-labelledby="autoridade-title">
       <div class="container authority-layout">
         <div class="authority-copy">
@@ -600,14 +666,16 @@
           >Garantir Meu Ar Puro Agora</a>
         </div>
 
-        <div class="authority-seal" aria-hidden="true">
+        <div class="authority-seal" aria-label="Experiência comprovada desde 2014">
+          <span class="authority-seal__kicker">DESDE</span>
           <span class="authority-seal__year">2014</span>
-          <span class="authority-seal__line"></span>
-          <span>EXPERIÊNCIA<br>COMPROVADA</span>
+          <span class="authority-seal__line" aria-hidden="true"></span>
+          <span class="authority-seal__text">EXPERIÊNCIA<br>COMPROVADA</span>
         </div>
       </div>
     </section>
 
+    <!-- FAQ -->
     <section class="section" id="duvidas" aria-labelledby="faq-title">
       <div class="container container--narrow">
         <div class="section-heading section-heading--center">
@@ -624,7 +692,7 @@
               </button>
             </h3>
             <div class="faq__answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1" hidden>
-              <p>Realizamos, nesta oferta, a higienização de ar condicionado residencial exclusivamente para modelos Split de 9.000 a 30.000 BTUs. Não atendemos aparelhos de janela.</p>
+              <p>Realizamos a higienização de ar condicionado residencial exclusivamente para modelos Split de 9.000 a 30.000 BTUs. Não atendemos aparelhos de janela.</p>
             </div>
           </article>
 
@@ -636,7 +704,7 @@
               </button>
             </h3>
             <div class="faq__answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" hidden>
-              <p>Os valores da unidade evaporadora são <strong>R$350,00</strong> para Split de 9.000 a 18.000 BTUs e <strong>R$450,00</strong> para Split de 22.000 a 30.000 BTUs. Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados <strong>R$150,00 por unidade</strong>.</p>
+              <p>Os valores da unidade evaporadora são R$350,00 para Split de 9.000 a 18.000 BTUs e R$450,00 para Split de 22.000 a 30.000 BTUs. Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados R$150,00 por unidade.</p>
             </div>
           </article>
 
@@ -660,7 +728,7 @@
               </button>
             </h3>
             <div class="faq__answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" hidden>
-              <p>Atendemos de segunda a sexta-feira, das <strong>8h às 18h</strong>. O contato e o agendamento são realizados exclusivamente pelo WhatsApp.</p>
+              <p>Atendemos de segunda a sexta-feira, das 8h às 18h. Atendimento e agendamento exclusivos pelo WhatsApp.</p>
             </div>
           </article>
 
@@ -684,18 +752,19 @@
               </button>
             </h3>
             <div class="faq__answer" id="faq-answer-6" role="region" aria-labelledby="faq-question-6" hidden>
-              <p>Esta oferta não inclui manutenção corretiva, instalação, troca de peças, PMOC, projetos ou atendimento a equipamentos comerciais, industriais e aparelhos de janela.</p>
+              <p>Não estão incluídos manutenção corretiva, instalação, troca de peças, PMOC, projetos ou atendimento a equipamentos comerciais, industriais e aparelhos de janela.</p>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="final-cta" aria-labelledby="final-cta-title">
+    <!-- CTA final -->
+    <section class="final-cta" aria-labelledby="cta-final-title">
       <div class="container final-cta__inner">
         <div>
           <p class="eyebrow">ATENDIMENTO PELO WHATSAPP</p>
-          <h2 id="final-cta-title">Seu Split limpo, sua casa mais confortável</h2>
+          <h2 id="cta-final-title">Seu Split limpo, sua casa mais confortável</h2>
           <p>Fale com a Total Soluções Prediais pelo WhatsApp, tire suas dúvidas e agende a higienização do seu aparelho com praticidade.</p>
         </div>
         <a
@@ -706,13 +775,14 @@
           data-whatsapp
           data-cta-location="final"
         >
-          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .4 5.2.4 11.7c0 2.1.6 4.2 1.6 6L0 24l6.5-1.7c1.8 1 3.8 1.5 5.8 1.5h.1c6.4 0 11.6-5.2 11.6-11.7 0-3.1-1.2-6.1-3.5-8.6Zm-8.1 18.3h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.7 9.7 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.5Z"/></svg>
+          <svg class="icon" aria-hidden="true"><use href="#icon-whatsapp"></use></svg>
           Garantir Meu Ar Puro Agora
         </a>
       </div>
     </section>
   </main>
 
+  <!-- Rodapé -->
   <footer class="site-footer">
     <div class="container site-footer__grid">
       <div class="site-footer__brand">
@@ -744,6 +814,7 @@
     </div>
   </footer>
 
+  <!-- Ações flutuantes -->
   <a
     class="whatsapp-float"
     href="https://wa.me/5521964051050?text=Ol%C3%A1%21%20Vim%20pela%20p%C3%A1gina%20da%20Total%20Solu%C3%A7%C3%B5es%20Prediais%20e%20quero%20agendar%20a%20higieniza%C3%A7%C3%A3o%20do%20meu%20ar%20condicionado%20Split%20para%20proteger%20a%20sa%C3%BAde%20da%20minha%20fam%C3%ADlia.%20Podem%20me%20passar%20as%20orienta%C3%A7%C3%B5es%3F"
@@ -753,11 +824,11 @@
     data-whatsapp
     data-cta-location="flutuante"
   >
-    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.6 0 .4 5.2.4 11.7c0 2.1.6 4.2 1.6 6L0 24l6.5-1.7c1.8 1 3.8 1.5 5.8 1.5h.1c6.4 0 11.6-5.2 11.6-11.7 0-3.1-1.2-6.1-3.5-8.6Zm-8.1 18.3h-.1a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4a9.7 9.7 0 1 1 8.5 4.7Zm5.4-7.3c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.6.1-.2.1-.4 0-.6l-.9-2.2c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.2.8.4 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.5Z"/></svg>
+    <svg aria-hidden="true"><use href="#icon-whatsapp"></use></svg>
   </a>
 
   <button class="back-to-top" type="button" aria-label="Voltar ao topo" data-back-to-top>
-    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m12 8-6 6 1.4 1.4L12 10.8l4.6 4.6L18 14Z"/></svg>
+    <svg aria-hidden="true"><use href="#icon-arrow-up"></use></svg>
   </button>
 </body>
 </html>

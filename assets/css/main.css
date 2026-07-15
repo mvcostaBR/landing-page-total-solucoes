@@ -106,6 +106,10 @@ address {
   box-shadow: var(--shadow-header);
 }
 
+.header-cta {
+  white-space: nowrap;
+}
+
 .brand__name {
   position: relative;
   padding-bottom: 0.42rem;
@@ -314,7 +318,7 @@ address {
    6. Seções e títulos
    -------------------------------------------------------------------------- */
 .section {
-  padding: clamp(4rem, 8vw, 7rem) 0;
+  padding: var(--section-heading-space) 0;
 }
 
 .section--soft {
@@ -323,14 +327,20 @@ address {
 
 .section--summary {
   position: relative;
-  margin-top: -2rem;
-  padding-top: 0;
-  background: linear-gradient(var(--color-white) 0 2rem, var(--color-off-white) 2rem 100%);
+  margin-top: 0;
+  padding-top: var(--section-heading-space);
+  background: var(--color-off-white);
 }
 
 .section-heading {
   max-width: 760px;
-  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--section-heading-space);
+}
+
+.section-heading .eyebrow,
+.authority-copy .eyebrow,
+.final-cta .eyebrow {
+  margin-bottom: 1rem;
 }
 
 .section-heading--center {
@@ -388,17 +398,22 @@ address {
   content: "";
 }
 
+.answer-card__icon,
 .answer-card__number {
-  display: inline-flex;
-  min-width: 2.6rem;
-  justify-content: center;
+  display: inline-grid;
+  width: 2.9rem;
+  height: 2.9rem;
   margin-bottom: 1.1rem;
-  padding: 0.35rem 0.6rem;
-  border-radius: 999px;
+  place-items: center;
+  border-radius: 0.7rem;
   color: var(--color-navy-950);
   background: var(--color-group-green);
-  font-size: 0.78rem;
-  font-weight: 900;
+}
+
+.answer-card__icon svg {
+  width: 1.45rem;
+  height: 1.45rem;
+  fill: currentColor;
 }
 
 .answer-card h3 {
@@ -608,7 +623,7 @@ address {
 .price-card {
   position: relative;
   display: flex;
-  min-height: 390px;
+  min-height: 430px;
   flex-direction: column;
   padding: clamp(1.5rem, 4vw, 2.25rem);
   border: 1px solid rgb(255 255 255 / 0.15);
@@ -618,22 +633,15 @@ address {
   backdrop-filter: blur(10px);
 }
 
+/* Compatibilidade: caso a classe antiga permaneça em cache, o segundo card
+   continua visualmente idêntico ao primeiro. */
 .price-card--featured {
-  border-color: var(--color-group-green);
-  background: rgb(169 205 74 / 0.09);
+  border-color: rgb(255 255 255 / 0.15);
+  background: rgb(255 255 255 / 0.07);
 }
 
 .price-card__badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.36rem 0.7rem;
-  border-radius: 999px;
-  color: var(--color-navy-950);
-  background: var(--color-group-green);
-  font-size: 0.66rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
+  display: none;
 }
 
 .price-card__label {
@@ -645,26 +653,38 @@ address {
 }
 
 .price-card h3 {
-  max-width: 310px;
-  margin-bottom: 2rem;
+  max-width: none;
+  margin-bottom: 0;
   color: var(--color-white);
-  font-size: 1.35rem;
+  font-size: clamp(0.92rem, 2.1vw, 1.35rem);
+  white-space: nowrap;
+}
+
+.price-card__center {
+  display: grid;
+  min-height: 210px;
+  flex: 1;
+  place-items: center;
+  padding-block: 1rem;
 }
 
 .price-card__price {
   display: flex;
+  width: 100%;
   align-items: flex-start;
-  margin: auto 0 1.4rem;
+  justify-content: center;
+  margin: 0;
   color: var(--color-white);
-  font-size: clamp(3.3rem, 7vw, 5.2rem);
+  font-size: clamp(4.6rem, 8.8vw, 7rem);
   font-weight: 900;
-  letter-spacing: -0.055em;
-  line-height: 1;
+  letter-spacing: -0.065em;
+  line-height: 0.92;
+  text-align: center;
 }
 
 .price-card__price span {
-  margin-top: 0.45rem;
-  font-size: 1.05rem;
+  margin-top: 0.35rem;
+  font-size: clamp(0.95rem, 2vw, 1.25rem);
   letter-spacing: 0;
 }
 
@@ -784,6 +804,7 @@ address {
   align-items: flex-start;
   padding: clamp(1.4rem, 3vw, 2rem);
   border: 1px solid var(--color-gray-200);
+  border-top: 5px solid var(--color-group-green);
   border-radius: var(--radius-lg);
   background: var(--color-white);
   box-shadow: var(--shadow-sm);
@@ -813,10 +834,6 @@ address {
 .area-card p {
   margin-top: auto;
   margin-bottom: 0;
-}
-
-.area-card--hours {
-  border-top: 5px solid var(--color-group-green);
 }
 
 .area-card--hours strong {
@@ -862,6 +879,18 @@ address {
   border-radius: 50%;
   color: var(--color-white);
   text-align: center;
+}
+
+.authority-seal__kicker,
+.authority-seal__text {
+  color: var(--color-white);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.16em;
+}
+
+.authority-seal__kicker {
+  margin-bottom: 0.45rem;
 }
 
 .authority-seal__year {
@@ -958,7 +987,7 @@ address {
    15. CTA final
    -------------------------------------------------------------------------- */
 .final-cta {
-  padding: clamp(3rem, 6vw, 5rem) 0;
+  padding: var(--section-heading-space) 0;
   color: var(--color-navy-950);
   background:
     linear-gradient(110deg, rgb(169 205 74 / 0.95), rgb(205 170 75 / 0.92)),
@@ -1260,7 +1289,73 @@ address {
 }
 
 .consent-option small {
+  max-width: 450px;
   color: var(--color-gray-500);
+  line-height: 1.45;
+}
+
+/* Toggle switch acessível usado nas preferências de privacidade. */
+.consent-switch {
+  position: relative;
+  display: inline-flex;
+  width: 3.35rem;
+  height: 1.9rem;
+  flex: 0 0 auto;
+  align-items: center;
+}
+
+.consent-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.consent-switch__track {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 999px;
+  background: var(--color-gray-200);
+  cursor: pointer;
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.consent-switch__track::after {
+  position: absolute;
+  top: 0.18rem;
+  left: 0.2rem;
+  width: 1.42rem;
+  height: 1.42rem;
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: 0 2px 7px rgb(7 20 38 / 0.18);
+  content: "";
+  transition: transform var(--transition);
+}
+
+.consent-switch input:checked + .consent-switch__track {
+  border-color: var(--color-group-green-dark);
+  background: var(--color-group-green);
+}
+
+.consent-switch input:checked + .consent-switch__track::after {
+  transform: translateX(1.42rem);
+}
+
+.consent-switch input:focus-visible + .consent-switch__track {
+  outline: 3px solid var(--color-group-green);
+  outline-offset: 3px;
+}
+
+.consent-switch input:disabled + .consent-switch__track {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+body.privacy-modal-open {
+  overflow: hidden;
 }
 
 .consent-modal__actions {
@@ -1343,6 +1438,26 @@ address {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --section-heading-space: 2.75rem;
+  }
+
+  .price-card {
+    min-height: 400px;
+  }
+
+  .price-card h3 {
+    font-size: clamp(0.86rem, 4vw, 1.05rem);
+  }
+
+  .price-card__price {
+    font-size: clamp(4.4rem, 22vw, 6.2rem);
+  }
+
+  .consent-option {
+    align-items: center;
+  }
+
   .hero-facts,
   .benefit-grid,
   .service-area-grid,
