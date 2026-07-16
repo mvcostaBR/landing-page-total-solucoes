@@ -1,6 +1,6 @@
 {
   "primary": {
-    "name": "WhatsApp — Higienização Split — Clique qualificado",
+    "name": "WhatsApp — Higienização de Ar-Condicionado — Clique qualificado",
     "source": "Website / Google Ads tag through GTM",
     "event": "google_ads_whatsapp_conversion",
     "category": "Contact or Lead",

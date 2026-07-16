@@ -44,9 +44,13 @@ primary_msg='Olá! Vim pela página da Total Soluções Prediais e quero agendar
 secondary_msg='Olá! Vi a tabela de preços, mas tenho um modelo de ar condicionado diferente/com outras especificações. Gostaria de saber os valores para higienização.'
 check('Mensagem principal exata', primary_msg in unquote(html))
 check('Mensagem secundária exata', secondary_msg in unquote(html))
-for value in ['R$350,00','R$450,00','R$150,00','Barra','Recreio','Freguesia','Leblon','São Conrado','Joá','Jardim Botânico','Lagoa','Botafogo','08h às 18h']:
+for value in ['R$350,00','R$450,00','R$750,00','R$950,00','R$150,00','Split','Cassete','Piso-Teto','Ar Central','certificado de higienização','todas as marcas do mercado','Barra','Recreio','Freguesia','Leblon','São Conrado','Joá','Jardim Botânico','Lagoa','Botafogo','8h às 18h']:
     check(value, value in html)
 check('Analogia obrigatória', 'Respirar o ar de um equipamento sujo pode ser comparado a beber água contaminada' in html)
+check('Condensadora restrita aos modelos Split', 'somente aos modelos Split de 9.000 a 30.000 BTUs' in html)
+check('Pé-direito de até 2,5 metros', 'pé-direito de até 2,5 metros' in html)
+check('Disponibilidade para outros bairros', 'outro bairro' in html and 'verificar a disponibilidade' in html)
+check('Sem exclusividade antiga de Split', 'exclusivamente para modelos Split' not in html)
 check('GTM placeholder sem ID inventado', 'data-gtm-id=""' in html)
 check('GA4 placeholder sem ID inventado', 'data-ga4-id=""' in html)
 check('Google Ads placeholders sem IDs inventados', 'data-google-ads-id=""' in html and 'data-google-ads-label=""' in html)

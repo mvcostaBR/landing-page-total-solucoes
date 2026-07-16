@@ -13,6 +13,17 @@
       "inLanguage": "pt-BR"
     },
     {
+      "@type": "ImageObject",
+      "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#primaryimage",
+      "name": "Higienização de ar-condicionado residencial pela Total Soluções Prediais",
+      "url": "https://www.totalsolucoesprediais.com.br/assets/img/og/higienizacao-ar-condicionado-total-solucoes-1200x630.png",
+      "contentUrl": "https://www.totalsolucoesprediais.com.br/assets/img/og/higienizacao-ar-condicionado-total-solucoes-1200x630.png",
+      "width": 1200,
+      "height": 630,
+      "caption": "Higienização residencial de aparelhos Split, Cassete, Piso-Teto e Ar Central",
+      "inLanguage": "pt-BR"
+    },
+    {
       "@type": [
         "Organization",
         "LocalBusiness",
@@ -25,10 +36,10 @@
         "@id": "https://www.totalsolucoesprediais.com.br/#logo"
       },
       "image": {
-        "@id": "https://www.totalsolucoesprediais.com.br/#logo"
+        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#primaryimage"
       },
       "foundingDate": "2014",
-      "description": "Empresa especializada em higienização de ar condicionado Split residencial no Rio de Janeiro.",
+      "description": "Empresa de engenharia especializada em higienização residencial de ar-condicionado Split, Cassete, Piso-Teto e Ar Central no Rio de Janeiro, com atendimento a todas as marcas e emissão de certificado de higienização.",
       "telephone": "+55-21-3337-0084",
       "email": "michel@totalsolucoesprediais.com.br",
       "address": {
@@ -61,6 +72,14 @@
         "opens": "08:00",
         "closes": "18:00"
       },
+      "knowsAbout": [
+        "Higienização de ar-condicionado residencial",
+        "Ar-condicionado Split",
+        "Ar-condicionado Cassete",
+        "Ar-condicionado Piso-Teto",
+        "Ar Central",
+        "Qualidade do ar em ambientes residenciais"
+      ],
       "parentOrganization": {
         "@type": "Organization",
         "name": "Grupo Total Soluções",
@@ -81,18 +100,33 @@
       "@type": "WebPage",
       "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#webpage",
       "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split",
-      "name": "Higienização de Ar Condicionado Split no Rio de Janeiro",
-      "description": "Higienização de ar condicionado Split residencial, com valores, bairros atendidos e agendamento pelo WhatsApp.",
+      "name": "Higienização de Ar-Condicionado Residencial no Rio de Janeiro",
+      "description": "Higienização residencial de aparelhos Split, Cassete, Piso-Teto e Ar Central, com preços, certificado, bairros atendidos e agendamento pelo WhatsApp.",
       "isPartOf": {
         "@id": "https://www.totalsolucoesprediais.com.br/#website"
       },
       "about": {
         "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
       },
+      "mainEntity": {
+        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service"
+      },
+      "primaryImageOfPage": {
+        "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#primaryimage"
+      },
       "breadcrumb": {
         "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#breadcrumb"
       },
+      "dateModified": "2026-07-16",
       "inLanguage": "pt-BR",
+      "keywords": [
+        "higienização de ar-condicionado",
+        "limpeza de ar-condicionado Split",
+        "higienização de Cassete",
+        "higienização de Piso-Teto",
+        "higienização de Ar Central",
+        "Rio de Janeiro"
+      ],
       "speakable": {
         "@type": "SpeakableSpecification",
         "cssSelector": [
@@ -110,7 +144,7 @@
         {
           "@type": "ListItem",
           "position": 1,
-          "name": "Higienização de Ar Condicionado Split",
+          "name": "Higienização de Ar-Condicionado Residencial",
           "item": "https://www.totalsolucoesprediais.com.br/higienizacao-split"
         }
       ]
@@ -118,8 +152,10 @@
     {
       "@type": "Service",
       "@id": "https://www.totalsolucoesprediais.com.br/higienizacao-split#service",
-      "name": "Higienização de Ar Condicionado Residencial Split",
-      "serviceType": "Higienização de ar condicionado Split residencial",
+      "name": "Higienização de Ar-Condicionado Residencial",
+      "serviceType": "Higienização de ar-condicionado residencial",
+      "description": "Higienização residencial de aparelhos Split, Cassete, Piso-Teto e Ar Central, de todas as marcas do mercado. O serviço inclui emissão de certificado de higienização. Ar Central é atendido sob consulta.",
+      "category": "Higienização de ar-condicionado residencial",
       "provider": {
         "@id": "https://www.totalsolucoesprediais.com.br/#business"
       },
@@ -137,7 +173,8 @@
       "offers": [
         {
           "@type": "Offer",
-          "name": "Higienização da evaporadora Split de 9.000 a 18.000 BTUs",
+          "name": "Higienização de Split de 9.000 a 18.000 BTUs",
+          "description": "Valor para higienização do modelo Split de 9.000 a 18.000 BTUs.",
           "price": "350.00",
           "priceCurrency": "BRL",
           "availability": "https://schema.org/InStock",
@@ -145,7 +182,8 @@
         },
         {
           "@type": "Offer",
-          "name": "Higienização da evaporadora Split de 22.000 a 30.000 BTUs",
+          "name": "Higienização de Split de 22.000 a 30.000 BTUs",
+          "description": "Valor para higienização do modelo Split de 22.000 a 30.000 BTUs.",
           "price": "450.00",
           "priceCurrency": "BRL",
           "availability": "https://schema.org/InStock",
@@ -153,7 +191,26 @@
         },
         {
           "@type": "Offer",
-          "name": "Higienização adicional da condensadora após avaliação no local",
+          "name": "Higienização de ar-condicionado Cassete",
+          "description": "Preço-base para pé-direito de até 2,5 metros de altura.",
+          "price": "750.00",
+          "priceCurrency": "BRL",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
+        },
+        {
+          "@type": "Offer",
+          "name": "Higienização de ar-condicionado Piso-Teto",
+          "description": "Preço-base para pé-direito de até 2,5 metros de altura.",
+          "price": "950.00",
+          "priceCurrency": "BRL",
+          "availability": "https://schema.org/InStock",
+          "url": "https://www.totalsolucoesprediais.com.br/higienizacao-split#precos"
+        },
+        {
+          "@type": "Offer",
+          "name": "Higienização adicional da condensadora para modelos Split",
+          "description": "Valor por unidade, aplicável somente aos modelos Split de 9.000 a 30.000 BTUs, após avaliação no local.",
           "price": "150.00",
           "priceCurrency": "BRL",
           "availability": "https://schema.org/InStock",
@@ -167,18 +224,18 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Quais aparelhos a Total Soluções Prediais atende?",
+          "name": "Quais modelos e marcas de ar-condicionado a Total Soluções Prediais atende?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Realizamos a higienização de ar condicionado residencial exclusivamente para modelos Split de 9.000 a 30.000 BTUs. Não atendemos aparelhos de janela."
+            "text": "Realizamos a higienização de ar-condicionado residencial nos modelos Split, Cassete, Piso-Teto e Ar Central. Trabalhamos com aparelhos de todas as marcas do mercado. O atendimento para Ar Central é realizado sob consulta. Não atendemos aparelhos de janela."
           }
         },
         {
           "@type": "Question",
-          "name": "Quanto custa a higienização do ar condicionado Split?",
+          "name": "Quanto custa a higienização do ar-condicionado?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Os valores da unidade evaporadora são R$350,00 para Split de 9.000 a 18.000 BTUs e R$450,00 para Split de 22.000 a 30.000 BTUs. Caso a condensadora também precise de higienização, após avaliação no local, são acrescentados R$150,00 por unidade."
+            "text": "Split de 9.000 a 18.000 BTUs: R$350,00; Split de 22.000 a 30.000 BTUs: R$450,00; Cassete: R$750,00; Piso-Teto: R$950,00. A higienização da condensadora custa R$150,00 por unidade e se aplica somente aos modelos Split de 9.000 a 30.000 BTUs, após avaliação no local. Para Cassete e Piso-Teto, os valores são preços-base para pé-direito de até 2,5 metros. Ar Central é sob consulta."
           }
         },
         {
@@ -186,7 +243,23 @@
           "name": "Em quais bairros a Total Soluções Prediais atende?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Atendemos na Barra, Recreio, Freguesia, Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo, no Rio de Janeiro."
+            "text": "Atendemos na Barra, Recreio, Freguesia, Leblon, São Conrado, Joá, Jardim Botânico, Lagoa e Botafogo, no Rio de Janeiro. Para outros bairros, entre em contato pelo WhatsApp para verificar a disponibilidade de atendimento."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "A empresa emite certificado de higienização?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. Ao concluir o serviço, a Total Soluções Prediais emite certificado de higienização do aparelho."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Por que a higienização periódica é importante?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A higienização periódica ajuda a reduzir o acúmulo de impurezas e a proliferação de microrganismos no aparelho. Esse cuidado contribui para a qualidade do ar e para um ambiente mais saudável para você e sua família, especialmente para pessoas sensíveis a alergias e desconfortos respiratórios. Esse cuidado não substitui orientação médica."
           }
         },
         {
@@ -195,6 +268,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Atendemos de segunda a sexta-feira, das 8h às 18h. Atendimento e agendamento exclusivos pelo WhatsApp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como solicitar o atendimento?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Toda solicitação é feita exclusivamente pelo WhatsApp, por meio dos botões desta página."
           }
         },
         {

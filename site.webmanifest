@@ -1,7 +1,7 @@
 {
   "name": "Total Soluções Prediais",
   "short_name": "Total Soluções",
-  "description": "Higienização de ar condicionado Split residencial no Rio de Janeiro.",
+  "description": "Higienização residencial de ar-condicionado Split, Cassete, Piso-Teto e Ar Central no Rio de Janeiro.",
   "lang": "pt-BR",
   "start_url": "./",
   "scope": "./",
@@ -9,7 +9,15 @@
   "background_color": "#071426",
   "theme_color": "#071426",
   "icons": [
-    {"src": "./assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png"},
-    {"src": "./assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png"}
+    {
+      "src": "./assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ]
 }

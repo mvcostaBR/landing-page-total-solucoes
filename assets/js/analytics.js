@@ -2,8 +2,9 @@
  * Camada de mensuração preparada para GTM, GA4, Google Ads, Meta Pixel e
  * Microsoft Clarity.
  *
- * IDs vazios mantêm as integrações desativadas, evitando requisições externas,
- * erros de configuração e duplicidade de tags durante a homologação.
+ * IDs vazios mantêm as integrações desativadas durante a homologação.
+ * A implementação respeita Consent Mode v2, não envia dados pessoais e não
+ * transmite os valores brutos de identificadores de clique.
  */
 (() => {
   'use strict';
@@ -23,10 +24,45 @@
     googleAdsLabel: script.dataset.googleAdsLabel?.trim() || '',
     metaPixelId: script.dataset.metaPixelId?.trim() || '',
     clarityId: script.dataset.clarityId?.trim() || '',
-    debug: script.dataset.debug === 'true'
+    debug: script.dataset.debug === 'true',
+    enhancedConversions: false
   };
 
+  const ATTRIBUTION_STORAGE_KEY = 'tsp-attribution-v1';
+  const ALLOWED_ATTRIBUTION = Object.freeze([
+    'utm_source',
+    'utm_medium',
+    'utm_campaign',
+    'utm_id',
+    'utm_term',
+    'utm_content',
+    'utm_source_platform',
+    'network',
+    'device',
+    'matchtype',
+    'adgroupid'
+  ]);
+  const CLICK_IDS = Object.freeze(["gclid", "wbraid", "gbraid"]);
+  const CLICK_ID_FLAGS = Object.freeze({
+    gclid: "gclid_present",
+    wbraid: "wbraid_present",
+    gbraid: "gbraid_present"
+  });
+  const FORBIDDEN_KEYS = new Set([
+    'name',
+    'nome',
+    'email',
+    'phone',
+    'telefone',
+    'message',
+    'mensagem',
+    'full_url',
+    ...CLICK_IDS
+  ]);
+
   const loaded = new Set();
+  const configured = new Set();
+  let gtagInitialized = false;
 
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function gtag() {
@@ -37,6 +73,63 @@
   const debugLog = (...args) => {
     if (config.debug) console.info('[TSP Analytics]', ...args);
   };
+
+  /** Normaliza valores curtos antes de colocá-los na camada de dados. */
+  const sanitizeValue = (value) => {
+    if (typeof value === 'boolean' || typeof value === 'number') return value;
+    if (typeof value !== 'string') return undefined;
+
+    const normalized = value.trim().slice(0, 160);
+    return normalized || undefined;
+  };
+
+  /** Remove chaves proibidas e valores não escalares. */
+  const sanitizeParameters = (parameters = {}) => Object.entries(parameters)
+    .reduce((result, [key, value]) => {
+      if (FORBIDDEN_KEYS.has(key)) return result;
+
+      const sanitized = sanitizeValue(value);
+      if (sanitized !== undefined) result[key] = sanitized;
+      return result;
+    }, {});
+
+  /** Lê atribuição salva sem interromper navegadores em modo restritivo. */
+  const readStoredAttribution = () => {
+    try {
+      const parsed = JSON.parse(window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY) || '{}');
+      return sanitizeParameters(parsed);
+    } catch {
+      return {};
+    }
+  };
+
+  /**
+   * Captura somente parâmetros permitidos.
+   * Identificadores de clique são convertidos em indicadores booleanos.
+   */
+  const captureAttribution = () => {
+    const params = new URLSearchParams(window.location.search);
+    const attribution = readStoredAttribution();
+
+    ALLOWED_ATTRIBUTION.forEach((key) => {
+      const value = sanitizeValue(params.get(key) || '');
+      if (value !== undefined) attribution[key] = value;
+    });
+
+    Object.entries(CLICK_ID_FLAGS).forEach(([key, flag]) => {
+      attribution[flag] = params.has(key) || Boolean(attribution[flag]);
+    });
+
+    try {
+      window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution));
+    } catch {
+      /* A atribuição permanece disponível apenas na memória desta página. */
+    }
+
+    return attribution;
+  };
+
+  const attribution = captureAttribution();
 
   /** Insere scripts externos uma única vez. */
   const appendScript = (src, id, attributes = {}) => {
@@ -55,22 +148,28 @@
     loaded.add(id);
   };
 
-  /** Carrega GTM ou gtag somente após consentimento de análise. */
-  const loadGoogle = () => {
-    if (config.gtmId) {
-      window.dataLayer.push({
-        'gtm.start': Date.now(),
-        event: 'gtm.js'
-      });
+  /** Inicializa GTM ou gtag conforme consentimento e IDs oficiais disponíveis. */
+  const loadGoogle = (state) => {
+    if (!state.analytics && !state.marketing) return;
 
-      appendScript(
-        `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(config.gtmId)}`,
-        'tsp-gtm'
-      );
+    if (config.gtmId) {
+      if (!loaded.has('tsp-gtm')) {
+        window.dataLayer.push({
+          'gtm.start': Date.now(),
+          event: 'gtm.js'
+        });
+
+        appendScript(
+          `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(config.gtmId)}`,
+          'tsp-gtm'
+        );
+      }
       return;
     }
 
-    const primaryId = config.ga4Id || config.googleAdsId;
+    const primaryId = (state.analytics && config.ga4Id)
+      || (state.marketing && config.googleAdsId);
+
     if (!primaryId) return;
 
     appendScript(
@@ -78,17 +177,24 @@
       'tsp-gtag'
     );
 
-    window.gtag('js', new Date());
+    if (!gtagInitialized) {
+      window.gtag('js', new Date());
+      gtagInitialized = true;
+    }
 
-    if (config.ga4Id) {
+    if (state.analytics && config.ga4Id && !configured.has(config.ga4Id)) {
       window.gtag('config', config.ga4Id, {
         send_page_view: true,
         allow_google_signals: false
       });
+      configured.add(config.ga4Id);
     }
 
-    if (config.googleAdsId) {
-      window.gtag('config', config.googleAdsId);
+    if (state.marketing && config.googleAdsId && !configured.has(config.googleAdsId)) {
+      window.gtag('config', config.googleAdsId, {
+        allow_enhanced_conversions: false
+      });
+      configured.add(config.googleAdsId);
     }
   };
 
@@ -130,53 +236,91 @@
 
   /** Aplica as integrações permitidas pela escolha atual. */
   const applyConsent = (state) => {
-    if (state.analytics) {
-      loadGoogle();
-      loadClarity();
-    }
+    loadGoogle(state);
 
+    if (state.analytics) loadClarity();
     if (state.marketing) loadMeta();
 
     debugLog('Consentimento aplicado', state);
   };
 
-  /** API pública para eventos de interação e conversão. */
-  window.tspTrack = (eventName, parameters = {}) => {
+  /** Coloca um evento sanitizado na camada de dados. */
+  const pushEvent = (eventName, parameters) => {
     const eventData = {
       event: eventName,
-      ...parameters,
+      ...sanitizeParameters(parameters),
       event_timestamp: Date.now()
     };
 
     window.dataLayer.push(eventData);
+    return eventData;
+  };
 
+  /** Envia um evento diretamente ao GA4 quando GTM não está em uso. */
+  const sendDirectGa4 = (eventName, parameters) => {
+    if (!config.ga4Id || config.gtmId) return;
+    window.gtag('event', eventName, sanitizeParameters(parameters));
+  };
+
+  /**
+   * API pública para eventos de interação e conversão.
+   * Um clique no WhatsApp gera sinais separados para diagnóstico, GA4 e Ads.
+   */
+  window.tspTrack = (eventName, parameters = {}) => {
     const consent = window.tspConsent?.get?.() || {
       analytics: false,
       marketing: false
     };
+    const cleanParameters = sanitizeParameters(parameters);
+    const common = {
+      ...cleanParameters,
+      ...attribution
+    };
 
-    if (consent.analytics && config.ga4Id && !config.gtmId) {
-      window.gtag('event', eventName, parameters);
+    pushEvent(eventName, common);
+
+    if (consent.analytics) {
+      sendDirectGa4(eventName, common);
     }
 
-    if (
-      eventName === 'whatsapp_click'
-      && consent.marketing
-      && config.googleAdsId
-      && config.googleAdsLabel
-      && !config.gtmId
-    ) {
-      window.gtag('event', 'conversion', {
-        send_to: `${config.googleAdsId}/${config.googleAdsLabel}`,
-        event_callback: () => undefined
-      });
+    if (eventName === 'whatsapp_click') {
+      const leadParameters = {
+        ...common,
+        method: 'WhatsApp',
+        lead_channel: 'whatsapp',
+        service: 'higienizacao_ar_condicionado',
+        enhanced_conversions: false
+      };
+
+      if (consent.analytics) {
+        pushEvent('generate_lead', leadParameters);
+        sendDirectGa4('generate_lead', leadParameters);
+      }
+
+      if (consent.marketing) {
+        pushEvent('google_ads_whatsapp_conversion', leadParameters);
+
+        if (
+          config.googleAdsId
+          && config.googleAdsLabel
+          && !config.gtmId
+        ) {
+          window.gtag('event', 'conversion', {
+            send_to: `${config.googleAdsId}/${config.googleAdsLabel}`,
+            event_callback: () => undefined
+          });
+        }
+
+        if (window.fbq) {
+          window.fbq('trackCustom', 'WhatsAppClick', {
+            cta_location: cleanParameters.cta_location || 'indefinido',
+            service: 'higienizacao_ar_condicionado'
+          });
+        }
+      }
     }
 
-    if (eventName === 'whatsapp_click' && consent.marketing && window.fbq) {
-      window.fbq('trackCustom', 'WhatsAppClick', parameters);
-    }
-
-    debugLog('Evento', eventName, parameters);
+    debugLog('Evento', eventName, common);
   };
 
   window.addEventListener('tsp:consent', (event) => {
