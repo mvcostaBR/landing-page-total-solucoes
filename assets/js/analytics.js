@@ -2,9 +2,14 @@
  * Camada de mensuração preparada para GTM, GA4, Google Ads, Meta Pixel e
  * Microsoft Clarity.
  *
- * IDs vazios mantêm as integrações desativadas durante a homologação.
- * A implementação respeita Consent Mode v2, não envia dados pessoais e não
- * transmite os valores brutos de identificadores de clique.
+ * Regras principais:
+ * - IDs vazios mantêm as integrações desativadas durante a homologação;
+ * - GTM/Google são carregados somente após consentimento de Analytics ou Marketing;
+ * - eventos analíticos e publicitários respeitam categorias de consentimento separadas;
+ * - URLs completas, mensagens, identificadores de clique brutos e dados pessoais
+ *   não são enviados às plataformas de mensuração;
+ * - cliques em "outros serviços" são registrados como interação, mas não como
+ *   lead ou conversão desta landing page de higienização residencial Split.
  */
 (() => {
   'use strict';
@@ -17,7 +22,7 @@
   if (!script) return;
 
   /** Configuração lida exclusivamente dos atributos do script no HTML. */
-  const config = {
+  const config = Object.freeze({
     gtmId: script.dataset.gtmId?.trim() || '',
     ga4Id: script.dataset.ga4Id?.trim() || '',
     googleAdsId: script.dataset.googleAdsId?.trim() || '',
@@ -26,9 +31,11 @@
     clarityId: script.dataset.clarityId?.trim() || '',
     debug: script.dataset.debug === 'true',
     enhancedConversions: false
-  };
+  });
 
   const ATTRIBUTION_STORAGE_KEY = 'tsp-attribution-v1';
+  const SERVICE_ID = 'higienizacao_split_residencial';
+
   const ALLOWED_ATTRIBUTION = Object.freeze([
     'utm_source',
     'utm_medium',
@@ -42,12 +49,18 @@
     'matchtype',
     'adgroupid'
   ]);
-  const CLICK_IDS = Object.freeze(["gclid", "wbraid", "gbraid"]);
+
+  const CLICK_IDS = Object.freeze(['gclid', 'wbraid', 'gbraid']);
   const CLICK_ID_FLAGS = Object.freeze({
-    gclid: "gclid_present",
-    wbraid: "wbraid_present",
-    gbraid: "gbraid_present"
+    gclid: 'gclid_present',
+    wbraid: 'wbraid_present',
+    gbraid: 'gbraid_present'
   });
+
+  /**
+   * Chaves que não podem chegar ao dataLayer nem às plataformas.
+   * A comparação é feita em minúsculas para impedir variações de capitalização.
+   */
   const FORBIDDEN_KEYS = new Set([
     'name',
     'nome',
@@ -56,9 +69,22 @@
     'telefone',
     'message',
     'mensagem',
+    'href',
+    'url',
     'full_url',
+    'link_url',
+    'page_url',
     ...CLICK_IDS
   ]);
+
+  /** CTAs que não representam conversão do serviço desta landing page. */
+  const NON_CONVERSION_CTA_LOCATIONS = new Set([
+    'outros-servicos',
+    'indefinido'
+  ]);
+
+  const EVENT_NAME_PATTERN = /^[a-z][a-z0-9_]{0,39}$/;
+  const PARAMETER_NAME_PATTERN = /^[a-z][a-z0-9_]{0,39}$/;
 
   const loaded = new Set();
   const configured = new Set();
@@ -76,27 +102,49 @@
 
   /** Normaliza valores curtos antes de colocá-los na camada de dados. */
   const sanitizeValue = (value) => {
-    if (typeof value === 'boolean' || typeof value === 'number') return value;
+    if (typeof value === 'boolean') return value;
+
+    if (typeof value === 'number') {
+      return Number.isFinite(value) ? value : undefined;
+    }
+
     if (typeof value !== 'string') return undefined;
 
     const normalized = value.trim().slice(0, 160);
     return normalized || undefined;
   };
 
-  /** Remove chaves proibidas e valores não escalares. */
+  /** Remove chaves proibidas, nomes inválidos e valores não escalares. */
   const sanitizeParameters = (parameters = {}) => Object.entries(parameters)
     .reduce((result, [key, value]) => {
-      if (FORBIDDEN_KEYS.has(key)) return result;
+      const normalizedKey = String(key).trim().toLowerCase();
+
+      if (
+        !PARAMETER_NAME_PATTERN.test(normalizedKey)
+        || FORBIDDEN_KEYS.has(normalizedKey)
+      ) {
+        return result;
+      }
 
       const sanitized = sanitizeValue(value);
-      if (sanitized !== undefined) result[key] = sanitized;
+      if (sanitized !== undefined) result[normalizedKey] = sanitized;
       return result;
     }, {});
+
+  /** Valida nomes de eventos antes de qualquer envio. */
+  const sanitizeEventName = (eventName) => {
+    if (typeof eventName !== 'string') return '';
+
+    const normalized = eventName.trim().toLowerCase();
+    return EVENT_NAME_PATTERN.test(normalized) ? normalized : '';
+  };
 
   /** Lê atribuição salva sem interromper navegadores em modo restritivo. */
   const readStoredAttribution = () => {
     try {
-      const parsed = JSON.parse(window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY) || '{}');
+      const parsed = JSON.parse(
+        window.sessionStorage.getItem(ATTRIBUTION_STORAGE_KEY) || '{}'
+      );
       return sanitizeParameters(parsed);
     } catch {
       return {};
@@ -105,7 +153,8 @@
 
   /**
    * Captura somente parâmetros permitidos.
-   * Identificadores de clique são convertidos em indicadores booleanos.
+   * Identificadores de clique são convertidos em indicadores booleanos; seus
+   * valores brutos não são persistidos nem enviados pelo código do projeto.
    */
   const captureAttribution = () => {
     const params = new URLSearchParams(window.location.search);
@@ -121,7 +170,10 @@
     });
 
     try {
-      window.sessionStorage.setItem(ATTRIBUTION_STORAGE_KEY, JSON.stringify(attribution));
+      window.sessionStorage.setItem(
+        ATTRIBUTION_STORAGE_KEY,
+        JSON.stringify(attribution)
+      );
     } catch {
       /* A atribuição permanece disponível apenas na memória desta página. */
     }
@@ -167,6 +219,10 @@
       return;
     }
 
+    /**
+     * Modo direto é apenas fallback. Com GTM configurado, os IDs diretos devem
+     * permanecer vazios no HTML para impedir duplicidade de mensuração.
+     */
     const primaryId = (state.analytics && config.ga4Id)
       || (state.marketing && config.googleAdsId);
 
@@ -185,12 +241,17 @@
     if (state.analytics && config.ga4Id && !configured.has(config.ga4Id)) {
       window.gtag('config', config.ga4Id, {
         send_page_view: true,
-        allow_google_signals: false
+        allow_google_signals: false,
+        allow_ad_personalization_signals: false
       });
       configured.add(config.ga4Id);
     }
 
-    if (state.marketing && config.googleAdsId && !configured.has(config.googleAdsId)) {
+    if (
+      state.marketing
+      && config.googleAdsId
+      && !configured.has(config.googleAdsId)
+    ) {
       window.gtag('config', config.googleAdsId, {
         allow_enhanced_conversions: false
       });
@@ -236,18 +297,30 @@
 
   /** Aplica as integrações permitidas pela escolha atual. */
   const applyConsent = (state) => {
-    loadGoogle(state);
+    const normalizedState = {
+      analytics: Boolean(state?.analytics),
+      marketing: Boolean(state?.marketing)
+    };
 
-    if (state.analytics) loadClarity();
-    if (state.marketing) loadMeta();
+    /** GTM/Google pode atender Analytics, Marketing ou ambos. */
+    loadGoogle(normalizedState);
 
-    debugLog('Consentimento aplicado', state);
+    if (normalizedState.analytics) loadClarity();
+    if (normalizedState.marketing) loadMeta();
+
+    debugLog('Consentimento aplicado', normalizedState);
   };
 
   /** Coloca um evento sanitizado na camada de dados. */
   const pushEvent = (eventName, parameters) => {
+    const cleanEventName = sanitizeEventName(eventName);
+    if (!cleanEventName) {
+      debugLog('Evento ignorado por nome inválido', eventName);
+      return null;
+    }
+
     const eventData = {
-      event: eventName,
+      event: cleanEventName,
       ...sanitizeParameters(parameters),
       event_timestamp: Date.now()
     };
@@ -258,75 +331,109 @@
 
   /** Envia um evento diretamente ao GA4 quando GTM não está em uso. */
   const sendDirectGa4 = (eventName, parameters) => {
-    if (!config.ga4Id || config.gtmId) return;
-    window.gtag('event', eventName, sanitizeParameters(parameters));
+    const cleanEventName = sanitizeEventName(eventName);
+    if (!cleanEventName || !config.ga4Id || config.gtmId) return;
+
+    window.gtag('event', cleanEventName, sanitizeParameters(parameters));
+  };
+
+  /** Determina se o clique pertence ao funil de higienização Split. */
+  const isQualifiedWhatsAppLead = (parameters) => {
+    const location = sanitizeValue(parameters.cta_location);
+
+    return Boolean(
+      location
+      && !NON_CONVERSION_CTA_LOCATIONS.has(location.toLowerCase())
+    );
   };
 
   /**
    * API pública para eventos de interação e conversão.
-   * Um clique no WhatsApp gera sinais separados para diagnóstico, GA4 e Ads.
+   * Um clique qualificado no WhatsApp gera sinais separados para diagnóstico,
+   * GA4 e Google Ads, sempre conforme o consentimento correspondente.
    */
   window.tspTrack = (eventName, parameters = {}) => {
+    const cleanEventName = sanitizeEventName(eventName);
+    if (!cleanEventName) return;
+
     const consent = window.tspConsent?.get?.() || {
       analytics: false,
       marketing: false
     };
+
     const cleanParameters = sanitizeParameters(parameters);
     const common = {
       ...cleanParameters,
       ...attribution
     };
 
-    pushEvent(eventName, common);
+    /** Evento técnico e analítico geral do clique. */
+    pushEvent(cleanEventName, common);
 
     if (consent.analytics) {
-      sendDirectGa4(eventName, common);
+      sendDirectGa4(cleanEventName, common);
     }
 
-    if (eventName === 'whatsapp_click') {
-      const leadParameters = {
-        ...common,
-        method: 'WhatsApp',
-        lead_channel: 'whatsapp',
-        service: 'higienizacao_ar_condicionado',
-        enhanced_conversions: false
-      };
+    if (cleanEventName !== 'whatsapp_click') {
+      debugLog('Evento', cleanEventName, common);
+      return;
+    }
 
-      if (consent.analytics) {
-        pushEvent('generate_lead', leadParameters);
-        sendDirectGa4('generate_lead', leadParameters);
+    /**
+     * "Outros serviços" permanece disponível para diagnóstico, mas não pode
+     * alimentar a conversão desta campanha dedicada à higienização Split.
+     */
+    if (!isQualifiedWhatsAppLead(cleanParameters)) {
+      debugLog('Clique de WhatsApp não qualificado como lead', common);
+      return;
+    }
+
+    const leadParameters = {
+      ...common,
+      method: 'whatsapp',
+      lead_channel: 'whatsapp',
+      service: SERVICE_ID,
+      lead_qualified: true
+    };
+
+    if (consent.analytics) {
+      pushEvent('generate_lead', leadParameters);
+      sendDirectGa4('generate_lead', leadParameters);
+    }
+
+    if (consent.marketing) {
+      pushEvent('google_ads_whatsapp_conversion', leadParameters);
+
+      /** Conversão direta usada somente quando não há GTM. */
+      if (
+        config.googleAdsId
+        && config.googleAdsLabel
+        && !config.gtmId
+      ) {
+        window.gtag('event', 'conversion', {
+          send_to: `${config.googleAdsId}/${config.googleAdsLabel}`,
+          event_callback: () => undefined,
+          event_timeout: 2000
+        });
       }
 
-      if (consent.marketing) {
-        pushEvent('google_ads_whatsapp_conversion', leadParameters);
-
-        if (
-          config.googleAdsId
-          && config.googleAdsLabel
-          && !config.gtmId
-        ) {
-          window.gtag('event', 'conversion', {
-            send_to: `${config.googleAdsId}/${config.googleAdsLabel}`,
-            event_callback: () => undefined
-          });
-        }
-
-        if (window.fbq) {
-          window.fbq('trackCustom', 'WhatsAppClick', {
-            cta_location: cleanParameters.cta_location || 'indefinido',
-            service: 'higienizacao_ar_condicionado'
-          });
-        }
+      if (window.fbq) {
+        window.fbq('trackCustom', 'WhatsAppClick', {
+          cta_location: cleanParameters.cta_location || 'indefinido',
+          service: SERVICE_ID
+        });
       }
     }
 
-    debugLog('Evento', eventName, common);
+    debugLog('Evento', cleanEventName, common);
   };
 
+  /** Reage a novas escolhas ou alterações nas preferências. */
   window.addEventListener('tsp:consent', (event) => {
     applyConsent(event.detail);
   });
 
+  /** Restaura a preferência salva ou mantém opcionais negados. */
   applyConsent(window.tspConsent?.get?.() || {
     analytics: false,
     marketing: false
