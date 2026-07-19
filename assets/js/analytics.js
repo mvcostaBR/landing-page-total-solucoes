@@ -4,10 +4,8 @@
  *
  * Regras principais:
  * - IDs vazios mantêm as integrações desativadas durante a homologação;
- * - o contêiner GTM é carregado imediatamente para disponibilizar o Consent Mode,
- *   permitir o Tag Assistant e gerenciar as tags do contêiner;
- * - GA4, Google Ads, Meta Pixel e Clarity continuam respeitando as categorias
- *   de consentimento configuradas;
+ * - o contêiner GTM é carregado imediatamente, após o estado padrão de consentimento;
+ * - integrações diretas do Google continuam condicionadas ao consentimento aplicável;
  * - eventos analíticos e publicitários respeitam categorias de consentimento separadas;
  * - URLs completas, mensagens, identificadores de clique brutos e dados pessoais
  *   não são enviados às plataformas de mensuração;
@@ -203,17 +201,16 @@
     loaded.add(id);
   };
 
-  /**
-   * Inicializa GTM ou gtag conforme os IDs oficiais disponíveis.
-   *
-   * O contêiner GTM é carregado mesmo antes de uma decisão de consentimento.
-   * Isso é necessário para o Consent Mode avançado e para o Tag Assistant.
-   * As tags internas do contêiner continuam subordinadas aos consentimentos
-   * definidos por consent.js e às verificações adicionais configuradas no GTM.
-   */
+  /** Inicializa GTM ou gtag conforme consentimento e IDs oficiais disponíveis. */
   const loadGoogle = (state) => {
+    /**
+     * Com GTM configurado, o contêiner precisa existir desde a abertura da
+     * página para que Consent Mode, Tag Assistant e scanners do Google
+     * reconheçam a implementação. As tags internas continuam ajustando o
+     * comportamento conforme os estados de consentimento já definidos.
+     */
     if (config.gtmId) {
-      if (!loaded.has('tsp-gtm') && !document.getElementById('tsp-gtm')) {
+      if (!loaded.has('tsp-gtm')) {
         window.dataLayer.push({
           'gtm.start': Date.now(),
           event: 'gtm.js'
@@ -224,13 +221,10 @@
           'tsp-gtm'
         );
       }
-
-      /** Marca como carregado também quando o elemento já existe na página. */
-      if (document.getElementById('tsp-gtm')) loaded.add('tsp-gtm');
       return;
     }
 
-    /** Integrações diretas continuam bloqueadas até consentimento aplicável. */
+    /** No modo direto, não carregue integrações sem consentimento aplicável. */
     if (!state.analytics && !state.marketing) return;
 
     /**
